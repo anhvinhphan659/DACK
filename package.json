@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon --inspect ./bin/www"
+    "start": "nodemon --inspect ./bin/www",
+    "models" : "sequelize-auto -o './src/app/models' -h db4free.net -d dds_19120 -u ma_phong -x 12345678 -e mysql"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -19,6 +20,7 @@
     "mysql2": "^2.3.3",
     "owl.carousel": "^2.3.4",
     "sequelize": "^6.12.0-alpha.1",
+    "sequelize-auto": "^0.8.5",
     "yarn": "^1.22.17"
   },
   "devDependencies": {
