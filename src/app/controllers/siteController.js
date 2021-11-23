@@ -1,7 +1,11 @@
+const siteservice = require('../services/siteService');
+
 class SiteController {
 
     // [GET]: /
-    index(req, res, next) {
+    async index(req, res, next) {
+            const books = await siteservice.list();
+           // res.send(books)
             res.render('home', { title: 'NoName' })
         }
         // [GET]: /search 
@@ -20,6 +24,7 @@ class SiteController {
         res.render('signup', { title: 'NoName' });
         return;
     }
+    // [GET]: /forget
     forget(req, res, next) {
             res.render('forgetpass', { title: 'NoName' });
             return;
