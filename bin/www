@@ -6,7 +6,7 @@ const http = require('http');
 
 // load db from file config env and seqlize sequelize
 require('dotenv').config()
-const { sequelize } = require('../src/app/model')
+const { sequelize } = require('../src/config/db')
 // check connect and connect app
 sequelize.authenticate().then(() => {
     console.log('Connection has been established successfully.');
