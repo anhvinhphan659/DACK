@@ -1,3 +1,4 @@
+//connect to service for site
 const siteservice = require('../services/siteService');
 
 class SiteController {
@@ -8,7 +9,7 @@ class SiteController {
            // res.send(books)
             res.render('home', { title: 'NoName' })
         }
-        // [GET]: /search 
+    // [GET]: /search 
     search(req, res, next) {
             var searchTitle = req.query.title;
             res.render('search', { title: "Book Selling", searchtitle: searchTitle, })
