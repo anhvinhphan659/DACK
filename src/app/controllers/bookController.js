@@ -5,10 +5,5 @@ class UserController{
     show(req,res,next) {
         res.render('books/book-detail', { title: 'NoName' });
     }
-    
-    
-
-    
-
 }
 module.exports = new UserController

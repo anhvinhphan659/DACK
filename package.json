@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev" : "nodemon --inspect ./bin/www",
-    "models" : "sequelize-auto -o './src/app/models' -h db4free.net -d dds_19120 -u ma_phong -x 12345678 -e mysql"
+    "dev": "nodemon --inspect ./bin/www",
+    "models": "sequelize-auto -o './src/app/models' -h db4free.net -d dds_19120 -u ma_phong -x 12345678 -e mysql"
   },
   "dependencies": {
     "body-parser": "^1.19.0",

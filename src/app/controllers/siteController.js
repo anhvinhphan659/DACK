@@ -1,5 +1,6 @@
 //connect to service for site
 const siteservice = require('../services/siteService');
+const {multipleSequelizeToObject} = require('../services/util/sequelize');
 
 class SiteController {
 
@@ -10,10 +11,12 @@ class SiteController {
             res.render('home', { title: 'NoName' })
         }
     // [GET]: /search 
-    search(req, res, next) {
+    async search(req, res, next) {
             var searchTitle = req.query.title;
-            res.render('search', { title: "Book Selling", searchtitle: searchTitle, })
-            return;
+            const books = await siteservice.list();
+//            res.render('search', { title: "Book Selling", searchtitle: multipleSequelizeToObject(books) , })
+        res.send(books)    
+        return;
         }
         // [GET]: /login 
     login(req, res, next) {
@@ -35,8 +38,5 @@ class SiteController {
         res.render('books/shopping-cart', { title: "Book Selling" });
         return;
     }
-
-
-
 }
 module.exports = new SiteController
