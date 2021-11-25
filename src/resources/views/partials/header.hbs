@@ -32,16 +32,9 @@
                 Thể loại
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Tiên hiệp</a></li>
-                <li><a class="dropdown-item" href="#">Kiếm hiệp</a></li>
-                <li><a class="dropdown-item" href="#">Huyền huyễn</a></li>
-                <li><a class="dropdown-item" href="#">Trinh thám</a></li>
-                <li><a class="dropdown-item" href="#">Cung đấu</a></li>
-                <li><a class="dropdown-item" href="#">Chiến lược</a></li>
-                <li><a class="dropdown-item" href="#">Xuyên không</a></li>
-                <li><a class="dropdown-item" href="#">Cổ tích</a></li>
-                <li><a class="dropdown-item" href="#">Huyền thoại</a></li>
-
+                {{#each categories}}
+                <li><a class="dropdown-item" href="#">{{this.tênTL}}</a></li>
+                {{/each}}
               </ul>
             </li>
           </ul>

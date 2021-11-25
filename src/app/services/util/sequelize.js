@@ -4,6 +4,6 @@ module.exports = {
     },
 
     SequelizeToObject: function(sequelize){
-        return sequelize ? sequelize.toObject(): sequelize;
+        return sequelize ? sequelize.toJSON(): sequelize;
     }
 }
