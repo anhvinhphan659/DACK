@@ -5,7 +5,7 @@ const RouterBook = require('./Book')
 
 function route(app){
     
-    app.use('/book',RouterBook)
+    app.use('/books',RouterBook)
     app.use("/users",RouterUsers)
     app.use("/admin",RouterAdmin)  
     app.use('/',RouterSite)
