@@ -15,11 +15,11 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     MOTA: {
-      type: DataTypes.STRING(200),
+      type: DataTypes.STRING(1000),
       allowNull: true
     },
     HINHANH: {
-      type: DataTypes.STRING(200),
+      type: DataTypes.STRING(500),
       allowNull: true
     },
     manxb: {
