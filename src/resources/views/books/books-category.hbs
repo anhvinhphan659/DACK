@@ -2,12 +2,12 @@
   <h1>{{title}}</h1>
   <p>Web bán truyện được ưa thích nhất</p>
   <div class="book-information">
-    <h2 style="color: orange;">Truyện chữ</h2>
+    <h2 style="color: orange;">{{category}}</h2>
     <div class="row">
-      <div class="col-2">
+       <div class="col-md-2">
         <p>Sắp xếp theo</p>
       </div>
-      <div class="col-10">
+      <div class="col-md-10">
         <select class="form-select" style="width: 250px;">
           <option selected>Select--</option>
           <option value="1">Thời gian</option>
@@ -21,7 +21,7 @@
       <div class="row">
         {{#each books}}
 
-        <div class="col-sm-6 col-lg-4">
+        <div class="col-sm-6 col-lg-4" style = "margin-bottom: 20px;>
                     <a href="/books/{{this.masach}}">
                    
                     {{!-- <a href="/books/{{this.masach}}"> --}}

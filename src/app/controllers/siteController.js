@@ -1,32 +1,21 @@
 //connect to service for site
 const siteservice = require('../services/siteService');
 const {multipleSequelizeToObject} = require('../services/util/sequelize');
-const bookCategory = require('../services/findBookType')
 
 class SiteController {
 
     // [GET]: /
     async index(req, res, next) {
-            const books = await siteservice.list();
+            const books = await siteservice.AllBooks();
            // res.send(books)
             res.render('home', { title: 'NoName' })
         }
     // [GET]: /search 
     async search(req, res, next) {
-            const type = req.query.type;
-            var temp0 = '';
-            var temp1 = '';
-            if(type === "truyen_chu") {
-                temp0 = 'TC';
-                temp1 = "Truyện chữ";
-            } else{
-                if(type == "truyen_tranh"){
-                    temp0 = "TT";
-                    temp1 = "Truyện tranh";
-                }
-            } 
-            const books = await bookCategory(temp0);
-            res.render('search', { title: "Book Selling" , searchtitle: multipleSequelizeToObject(books), type: temp1 })
+            const title = req.query.title;
+            const books = await siteservice.findByTitle(title);
+            res.render('search', { title: "Book Selling" , books: multipleSequelizeToObject(books), title: title})
+
        // res.send(books)
         return;
         }

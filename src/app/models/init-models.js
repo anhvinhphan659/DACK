@@ -8,7 +8,7 @@ var _phieumua = require("./phieumua");
 var _phieunhap = require("./phieunhap");
 var _sach = require("./sach");
 var _theloai = require("./theloai");
-var _theloaiofsach = require("./theloaiofsach");
+var _theloaicuasach = require("./theloaicuasach");
 var _tonkho = require("./tonkho");
 
 function initModels(sequelize) {
@@ -21,13 +21,15 @@ function initModels(sequelize) {
   var phieunhap = _phieunhap(sequelize, DataTypes);
   var sach = _sach(sequelize, DataTypes);
   var theloai = _theloai(sequelize, DataTypes);
-  var theloaiofsach = _theloaiofsach(sequelize, DataTypes);
+  var theloaicuasach = _theloaicuasach(sequelize, DataTypes);
   var tonkho = _tonkho(sequelize, DataTypes);
 
   phieumua.belongsToMany(sach, { as: 'MASACH_saches', through: ct_phieumua, foreignKey: "MAPM", otherKey: "MASACH" });
   phieunhap.belongsToMany(sach, { as: 'MASACH_sach_ct_phieunhaps', through: ct_phieunhap, foreignKey: "MAPN", otherKey: "MASACH" });
   sach.belongsToMany(phieumua, { as: 'MAPM_phieumuas', through: ct_phieumua, foreignKey: "MASACH", otherKey: "MAPM" });
   sach.belongsToMany(phieunhap, { as: 'MAPN_phieunhaps', through: ct_phieunhap, foreignKey: "MASACH", otherKey: "MAPN" });
+  sach.belongsToMany(theloai, { as: 'maTL_theloais', through: theloaicuasach, foreignKey: "masach", otherKey: "maTL" });
+  theloai.belongsToMany(sach, { as: 'masach_saches', through: theloaicuasach, foreignKey: "maTL", otherKey: "masach" });
   phieumua.belongsTo(khachhang, { as: "MAKH_khachhang", foreignKey: "MAKH"});
   khachhang.hasMany(phieumua, { as: "phieumuas", foreignKey: "MAKH"});
   phieumua.belongsTo(nhanvien, { as: "MANV_nhanvien", foreignKey: "MANV"});
@@ -46,12 +48,12 @@ function initModels(sequelize) {
   sach.hasMany(ct_phieumua, { as: "ct_phieumuas", foreignKey: "MASACH"});
   ct_phieunhap.belongsTo(sach, { as: "MASACH_sach", foreignKey: "MASACH"});
   sach.hasMany(ct_phieunhap, { as: "ct_phieunhaps", foreignKey: "MASACH"});
-  theloaiofsach.belongsTo(sach, { as: "masach_sach", foreignKey: "masach"});
-  sach.hasMany(theloaiofsach, { as: "theloaiofsaches", foreignKey: "masach"});
+  theloaicuasach.belongsTo(sach, { as: "masach_sach", foreignKey: "masach"});
+  sach.hasMany(theloaicuasach, { as: "theloaicuasaches", foreignKey: "masach"});
   tonkho.belongsTo(sach, { as: "masach_sach", foreignKey: "masach"});
   sach.hasMany(tonkho, { as: "tonkhos", foreignKey: "masach"});
-  theloaiofsach.belongsTo(theloai, { as: "maTL_theloai", foreignKey: "maTL"});
-  theloai.hasOne(theloaiofsach, { as: "theloaiofsach", foreignKey: "maTL"});
+  theloaicuasach.belongsTo(theloai, { as: "maTL_theloai", foreignKey: "maTL"});
+  theloai.hasMany(theloaicuasach, { as: "theloaicuasaches", foreignKey: "maTL"});
 
   return {
     ct_phieumua,
@@ -63,7 +65,7 @@ function initModels(sequelize) {
     phieunhap,
     sach,
     theloai,
-    theloaiofsach,
+    theloaicuasach,
     tonkho,
   };
 }

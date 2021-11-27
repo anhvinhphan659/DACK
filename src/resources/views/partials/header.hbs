@@ -1,99 +1,73 @@
-<header>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container-fluid">
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarTogglerDemo03"
-          aria-controls="navbarTogglerDemo03"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand" href="/">
-          <img class="logo-display" src="/images/logo.png" />
-        </a>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/">Trang chủ</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/books/allBooks">Tất cả truyện</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/books/novel">Truyện chữ</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/books/comic">Truyện tranh</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Thể loại
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="#">Tiên hiệp</a></li>
-                <li><a class="dropdown-item" href="#">Kiếm hiệp</a></li>
-                <li><a class="dropdown-item" href="#">Huyền huyễn</a></li>
-                <li><a class="dropdown-item" href="#">Trinh thám</a></li>
-                <li><a class="dropdown-item" href="#">Cung đấu</a></li>
-                <li><a class="dropdown-item" href="#">Chiến lược</a></li>
-                <li><a class="dropdown-item" href="#">Xuyên không</a></li>
-                <li><a class="dropdown-item" href="#">Cổ tích</a></li>
-                <li><a class="dropdown-item" href="#">Huyền thoại</a></li>
+<header >
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid" >
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
+        aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="/">
+        <img class="logo-display" src="/images/logo.png" />
+      </a>
+      <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Trang chủ</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/books/allBooks">Tất cả truyện</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/books/type/novel">Truyện chữ</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/books/type/comic">Truyện tranh</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Thể loại
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <div class="container" style = "width: 500px;">
+                <div class="row">
+                  {{#each categories}}
+                  <div class="col-sm-3">
 
-              </ul>
-            </li>
-          </ul>
-          <a href="/shopping-cart"><button class="btn btn-outline-success" style="margin-right:10px;">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-cart"
-              viewBox="0 0 16 16"
-            >
+                    <li>
+                      <a class="dropdown-item" href="/books/category/{{this.tênTL}}">{{this.tênTL}}</a>
+                    </li>
+                  </div>
+
+                  {{/each}}
+
+                </div>
+            </ul>
+          </li>
+        </ul>
+        <a href="/shopping-cart"><button class="btn btn-outline-success" style="margin-right:10px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart"
+              viewBox="0 0 16 16">
               <path
-                d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"
-              ></path>
+                d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z">
+              </path>
             </svg>
           </button></a>
-          <form class="d-flex"  action="/search">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-              id="search-book"
-              name="title"
-            />
-            <button
-              class="btn btn-outline-success"
-              type="submit"
-              style="margin-right:10px;"
-             
-            ><svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-search"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
-                ></path>
-              </svg></button>
-          </form>
-          <span>
-            <a href="/login" class="btn btn-primary">Đăng nhập</a>
+        <form class="d-flex" action="/search">
+          <input class="form-control me-2" type="search" placeholder="Tên truyện" aria-label="Search" id="search-book"
+            name="title" />
+          <button class="btn btn-outline-success" type="submit" style="margin-right:10px;"><svg
+              xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+              viewBox="0 0 16 16">
+              <path
+                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z">
+              </path>
+            </svg></button>
+        </form>
+        <span>
+          <a href="/login" class="btn btn-primary">Đăng nhập</a>
 
-          </span>
-        </div>
+        </span>
       </div>
-    </nav>
+    </div>
+  </nav>
 </header>

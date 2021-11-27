@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('theloaiofsach', {
+  return sequelize.define('theloaicuasach', {
     maTL: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -13,6 +13,7 @@ module.exports = function(sequelize, DataTypes) {
     masach: {
       type: DataTypes.STRING(6),
       allowNull: false,
+      primaryKey: true,
       references: {
         model: 'sach',
         key: 'masach'
@@ -20,7 +21,7 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
-    tableName: 'theloaiofsach',
+    tableName: 'theloaicuasach',
     timestamps: false,
     indexes: [
       {
@@ -29,6 +30,7 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "maTL" },
+          { name: "masach" },
         ]
       },
       {
