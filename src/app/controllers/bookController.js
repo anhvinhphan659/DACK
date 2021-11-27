@@ -1,7 +1,7 @@
 const siteService = require('../services/siteService');
-const {SequelizeToObject} = require('../services/util/sequelize');
-const {multipleSequelizeToObject} = require('../services/util/sequelize');
-
+const { SequelizeToObject } = require('../services/util/sequelize');
+const { multipleSequelizeToObject } = require('../services/util/sequelize');
+const TITLE_PER_PAGE = 12;
 
 class UserController {
 
@@ -15,17 +15,27 @@ class UserController {
     // // [GET]: /book/comic
     // async comic(req, res, next) {
     //     const books = await siteService.findByType('TT');
-        
+
     //     res.render('books/comic', { title: "Book Selling", books: multipleSequelizeToObject(books) });
     //     return;
     // }
 
     // [GET]: /book/allBooks
-    
+
     async showAll(req, res, next) {
 
+        var page = parseInt(req.query.page);
+        if (isNaN(page)) {
+            page = 1;
+        }
+        const start = (page - 1) * TITLE_PER_PAGE;
+        const end = start + TITLE_PER_PAGE;
         const books = await siteService.AllBooks();
-        res.render('books/all-books', { title: "Book Selling", books: multipleSequelizeToObject(books) });
+
+
+
+
+        res.render('books/all-books', { title: "Book Selling", books: booksArray.slice(start, end), totalPage: parseInt(booksArray.length / TITLE_PER_PAGE) + 1, currentPage: page });
         return;
     }
 
@@ -33,16 +43,24 @@ class UserController {
     async showType(req, res, next) {
         const bookType = req.params.id;
         var type = '';
-        if (bookType == 'novel'){
+        if (bookType == 'novel') {
             type = 'TC';
-        }else {
-            if(bookType == 'comic'){
+        } else {
+            if (bookType == 'comic') {
                 type = 'TT';
             }
         }
         const books = await siteService.findByType(type);
-        
-        res.render('books/books-type', { title: "Book Selling", books: multipleSequelizeToObject(books) });
+
+        var page = parseInt(req.query.page);
+        if (isNaN(page)) {
+            page = 1;
+        }
+        const start = (page - 1) * TITLE_PER_PAGE;
+        const end = start + TITLE_PER_PAGE;
+        const booksArray = multipleSequelizeToObject(books);
+
+        res.render('books/books-type', { title: "Book Selling", books: booksArray.slice(start, end), totalPage: parseInt(booksArray.length / TITLE_PER_PAGE) + 1, currentPage: page, Type: bookType });
         return;
     }
 
@@ -51,13 +69,20 @@ class UserController {
         const bookCategory = req.params.id;
         console.log(bookCategory)
         const books = await siteService.findByCategory(bookCategory);
-        
-        res.render('books/books-category', { title: "Book Selling", books: multipleSequelizeToObject(books), category: bookCategory });
+        var page = parseInt(req.query.page);
+        if (isNaN(page)) {
+            page = 1;
+        }
+        const start = (page - 1) * TITLE_PER_PAGE;
+        const end = start + TITLE_PER_PAGE;
+        const booksArray = multipleSequelizeToObject(books);
+
+        res.render('books/books-category', { title: "Book Selling", books: booksArray.slice(start, end), totalPage: parseInt(booksArray.length / TITLE_PER_PAGE) + 1, currentPage: page, category: bookCategory });
         return;
     }
 
 
-    
+
     // [GET]: /book/:masach
     async show(req, res, next) {
         const bookId = req.params.id;
