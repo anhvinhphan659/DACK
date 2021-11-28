@@ -13,6 +13,7 @@ class SiteController {
     // [GET]: /search 
     async search(req, res, next) {
             const title = req.query.title;
+            console.log(req.query.title);
             const books = await siteservice.findByTitle(title);
             res.render('search', { title: "Book Selling" , books: multipleSequelizeToObject(books), title: title})
 

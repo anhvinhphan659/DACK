@@ -43,7 +43,7 @@ exports.findByCategory = (category) => {
         as: 'maTL_theloai',
         where: {
           tênTL: {
-            [Op.like]: category,
+            [Op.like]: '%' + category + '%',
           },
         },
       }],

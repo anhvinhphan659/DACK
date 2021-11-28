@@ -21,7 +21,7 @@
       <div class="row">
         {{#each books}}
 
-        <div class="col-sm-6 col-lg-4" style = "margin-bottom: 20px;>
+        <div class="col-sm-6 col-lg-4" style = "margin-bottom: 20px;">
                     <a href="/books/{{this.masach}}">
                    
                     {{!-- <a href="/books/{{this.masach}}"> --}}
@@ -38,8 +38,10 @@
             </div>
         </a>
           </div>
-
-
+        {{else}}
+        <div style = "font-style: italic;">
+          <h3>Chưa có truyện cho thể loại {{category}}</h3>
+        </div>
         {{/each}}
 
       </div>
