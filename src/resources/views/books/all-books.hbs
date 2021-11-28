@@ -44,17 +44,25 @@
 
       </div>
     </div>
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center" >
       <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        <ul class="pagination" id="pagination">
+          {{!-- <li class="page-item"><a class="page-link" href="#" value="-1">Previous</a></li>
           <li class="page-item"><a class="page-link" href="#">1</a></li>
           <li class="page-item"><a class="page-link" href="#">2</a></li>
           <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">Next</a></li>
+          <li class="page-item"><a class="page-link" href="#">Next</a></li> --}}
         </ul>
       </nav>
     </div>
-
+    <div class="pagination" id="pagination">
+    <ul> <!--pages or li are comes from javascript --> </ul>
+  </div>
   </div>
 </div>
+
+<script>
+
+generatePagination({{totalPage}},{{currentPage}},"/books/allBooks?page=");
+
+</script>

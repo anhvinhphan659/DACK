@@ -1,24 +1,46 @@
 //connect to service for site
+
 const siteservice = require('../services/siteService');
-const {multipleSequelizeToObject} = require('../services/util/sequelize');
+const { multipleSequelizeToObject } = require('../services/util/sequelize');
+const TITLE_PER_PAGE = 12;
 
 class SiteController {
 
     // [GET]: /
     async index(req, res, next) {
-            const books = await siteservice.AllBooks();
-           // res.send(books)
-            res.render('home', { title: 'NoName' })
+            // const newComics = await siteservice.findNewBooks('TT');
+            // const newNovels = await siteservice.findNewBooks('TC');
+
+            //const hotComics = await siteservice.findHotBooks('TT');
+            // const hotNovels = await siteservice.findHotBooks('TC');
+            res.render('home'); 
+            // res.send(hotComics)
+            //res.render('home', { title: 'NoName', newComics: newComics, newNovels: newNovels, hotComics: hotComics, hotNovels:hotNovels });
         }
-    // [GET]: /search 
+        // [GET]: /search 
     async search(req, res, next) {
+
             const title = req.query.title;
             console.log(req.query.title);
-            const books = await siteservice.findByTitle(title);
-            res.render('search', { title: "Book Selling" , books: multipleSequelizeToObject(books), title: title})
+            var page = parseInt(req.query.page);
+            if (isNaN(page)) {
+                page = 1;
+            }
 
-       // res.send(books)
-        return;
+            const start = (page - 1) * TITLE_PER_PAGE;
+            const end = start + TITLE_PER_PAGE;
+            const books = await siteservice.findByTitle(title);
+
+
+            const booksArray = multipleSequelizeToObject(books);
+            // console.log(booksArray.slice(0, 5));
+            // booksArray = booksArray.splice(0, skip);
+
+
+            res.render('search', { title: "Book Selling", books: booksArray.slice(start, end), searchTitle: title, totalPage: parseInt(booksArray.length / TITLE_PER_PAGE) + 1, currentPage: page })
+
+            // res.send(books)
+            return;
         }
         // [GET]: /login 
     login(req, res, next) {
@@ -27,10 +49,10 @@ class SiteController {
         }
         //[GET]: /signup 
     signup(req, res, next) {
-        res.render('signup', { title: 'NoName' });
-        return;
-    }
-    // [GET]: /forget
+            res.render('signup', { title: 'NoName' });
+            return;
+        }
+        // [GET]: /forget
     forget(req, res, next) {
             res.render('forgetpass', { title: 'NoName' });
             return;

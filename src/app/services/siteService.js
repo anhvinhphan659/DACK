@@ -10,7 +10,7 @@ exports.AllBooks = () => {
   return models.sach.findAll();
 }
 
-//Lấy theo masach
+//Lấy theo masach - chi tiết sách
 exports.findById = (id) => {
   return models.sach.findOne({
     where: {
@@ -29,8 +29,6 @@ exports.findByType = (type) => {
     }
   });
 }
-
-
 
 //Lấy sách theo thể loại 
 exports.findByCategory = (category) => {
@@ -63,6 +61,44 @@ exports.findByTitle = (title) => {
     }
   });
 }
+
+//Lấy sách mới nhất
+// exports.findNewBooks = (type) => {
+//   return models.sach.findAll({
+//     where:{
+//       masach: {
+//         [Op.like]: type + '%',
+//       }
+//     },
+//     order: [
+//       ['ngayXB', 'DESC'],
+//   ],
+//     limit: 10,
+//   });
+// }
+
+// exports.findHotBooks = (type) => {
+//   return models.sach.findAll({
+//     where: {
+//       masach: {
+//         [Op.like]: type + '%',
+//       }
+//     },
+
+//     include: [{
+//       model: models.tonkho,
+//       as: 'tonkho',
+      
+//     }],
+
+//     order:[
+//       ['Tongxuat', "DESC"],
+//     ],
+
+//     limit: 10,
+    
+//   });
+// }
 
 //Lấy thể loại sách
 exports.listTheloai = () => {
