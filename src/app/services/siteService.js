@@ -42,7 +42,7 @@ exports.findByCategory = (category) => {
         model: models.theloai,
         as: 'maTL_theloai',
         where: {
-          tênTL: {
+          tenTL: {
             [Op.like]: category,
           },
         },

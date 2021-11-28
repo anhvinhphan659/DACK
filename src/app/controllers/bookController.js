@@ -31,10 +31,7 @@ class UserController {
         const start = (page - 1) * TITLE_PER_PAGE;
         const end = start + TITLE_PER_PAGE;
         const books = await siteService.AllBooks();
-
-
-
-
+        const booksArray = multipleSequelizeToObject(books);
         res.render('books/all-books', { title: "Book Selling", books: booksArray.slice(start, end), totalPage: parseInt(booksArray.length / TITLE_PER_PAGE) + 1, currentPage: page });
         return;
     }
