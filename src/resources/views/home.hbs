@@ -10,23 +10,24 @@
 
     <div class="card">
       <div class="card-body">
-        <h4>Truyện mới</h4>
+        <h4>Truyện tranh mới</h4>
       </div>
       <div class="row">
         <div class="categories__slider owl-carousel">
+          {{#each newComics}}
           <div class="col-lg-3">
             <div class="categories__item set-bg">
               <div class="card" style=" height:100%">
-                <a href="/">
-                  <img src="images/conan_84.jpg" class="card-img-top" alt="conan_84" />
+                <a href="/books/{{this.masach}}">
+                  <img src="{{this.HINHANH}}" class="card-img-top" alt="{{this.tensach}}" />
                 </a>
                 <div class="card-body">
-                  <a href="/book/book-detail">
+                  <a href="/books/{{this.masach}}">
                     <div class="card-title">
-                      Thám tử lừng danh conan tập 84
+                      {{this.tensach}}
                     </div>
                   </a>
-                  <p class="card-text">Book 's content</p>
+                  <p class="card-text">{{this.MOTA}}</p>
                 </div>
 
                 <div class="card-body">
@@ -36,157 +37,66 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-3">
-            <div class="categories__item set-bg">
-              <div class="card" style=" height:100%">
-               <a href="/book-detail">
-                  <img src="images/conan_84.jpg" class="card-img-top" alt="conan_84" />
-                </a>
-                <div class="card-body">
-                  <a href="/book-detail">
-                    <div class="card-title">
-                      Thám tử lừng danh conan tập 84
-                    </div>
-                  </a>
-                  <p class="card-text">Book 's content</p>
-                </div>
+          {{/each}}
 
-                <div class="card-body">
-                  <button class="btn btn-outline-success">Thêm vào giỏ</button>
-                  <button class="btn btn-outline-success">Mua ngay</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="categories__item set-bg">
-              <div class="card" style=" height:100%">
-                <a href="/book-detail">
-                  <img src="images/conan_84.jpg" class="card-img-top" alt="conan_84" />
-                </a>
-                <div class="card-body">
-                  <a href="/book-detail">
-                    <div class="card-title">
-                      Thám tử lừng danh conan tập 84
-                    </div>
-                  </a>
-                  <p class="card-text">Book 's content</p>
-                </div>
-
-                <div class="card-body">
-                  <button class="btn btn-outline-success">Thêm vào giỏ</button>
-                  <button class="btn btn-outline-success">Mua ngay</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="categories__item set-bg">
-              <div class="card" style=" height:100%">
-                <a href="/book-detail">
-                  <img src="images/conan_84.jpg" class="card-img-top" alt="conan_84" />
-                </a>
-                <div class="card-body">
-                  <a href="/book-detail">
-                    <div class="card-title">
-                      Thám tử lừng danh conan tập 84
-                    </div>
-                  </a>
-                  <p class="card-text">Book 's content</p>
-                </div>
-
-                <div class="card-body">
-                  <button class="btn btn-outline-success">Thêm vào giỏ</button>
-                  <button class="btn btn-outline-success">Mua ngay</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="categories__item set-bg">
-              <div class="card" style=" height:100%">
-               <a href="/book-detail">
-                  <img src="images/conan_84.jpg" class="card-img-top" alt="conan_84" />
-                </a>
-                <div class="card-body">
-                  <a href="/book-detail">
-                    <div class="card-title">
-                      Thám tử lừng danh conan tập 84
-                    </div>
-                  </a>
-                  <p class="card-text">Book 's content</p>
-                </div>
-                <div class="card-body">
-                  <button class="btn btn-outline-success">Thêm vào giỏ</button>
-                  <button class="btn btn-outline-success">Mua ngay</button>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h4>Truyện chữ mới</h4>
+      </div>
+      <div class="row">
+        <div class="categories__slider owl-carousel">
+          {{#each newNovels}}
+          <div class="col-lg-3">
+            <div class="categories__item set-bg">
+              <div class="card" style=" height:100%">
+                <a href="/books/{{this.masach}}">
+                  <img src="{{this.HINHANH}}" class="card-img-top" alt="{{this.tensach}}" />
+                </a>
+                <div class="card-body">
+                  <a href="/books/{{this.masach}}">
+                    <div class="card-title">
+                      {{this.tensach}}
+                    </div>
+                  </a>
+                  <p class="card-text">{{this.MOTA}}</p>
+                </div>
+                <div class="card-body">
+                  <button class="btn btn-outline-success">Thêm vào giỏ</button>
+                  <button class="btn btn-outline-success">Mua ngay</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{/each}}
+
+        </div>
+      </div>
+    </div>
+
     <div class="card">
       <div class="card-body">
         <h4>Top truyện tranh hot</h4>
       </div>
       <div class="row">
         <div class="categories__slider owl-carousel">
+          {{#each hotComics}}
           <div class="col-lg-3">
             <div class="categories__item set-bg">
               <div class="card" style=" height:100%">
-                <a href="/book-detail">
-                  <img src="images/conan_84.jpg" class="card-img-top" alt="conan_84" />
+                <a href="/books/{{this.masach_sach.masach}}">
+                  <img src="{{this.masach_sach.HINHANH}}" class="card-img-top" alt="{{this.masach_sach.tensach}}" />
                 </a>
                 <div class="card-body">
-                  <a href="/book-detail">
+                  <a href="/books/{{this.masach_sach.masach}}">
                     <div class="card-title">
-                      Thám tử lừng danh conan tập 84
+                      {{this.masach_sach.tensach}}
                     </div>
                   </a>
-                  <p class="card-text">Book 's content</p>
-                </div>
-                <div class="card-body">
-                  <button class="btn btn-outline-success">Thêm vào giỏ</button>
-                  <button class="btn btn-outline-success">Mua ngay</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="categories__item set-bg">
-              <div class="card" style=" height:100%">
-               <a href="/book-detail">
-                  <img src="images/conan_84.jpg" class="card-img-top" alt="conan_84" />
-                </a>
-                <div class="card-body">
-                  <a href="/book-detail">
-                    <div class="card-title">
-                      Thám tử lừng danh conan tập 84
-                    </div>
-                  </a>
-                  <p class="card-text">Book 's content</p>
-                </div>
-                <div class="card-body">
-                  <button class="btn btn-outline-success">Thêm vào giỏ</button>
-                  <button class="btn btn-outline-success">Mua ngay</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="categories__item set-bg">
-              <div class="card" style=" height:100%">
-               <a href="/book-detail">
-                  <img src="images/conan_84.jpg" class="card-img-top" alt="conan_84" />
-                </a>
-                <div class="card-body">
-                  <a href="/book-detail">
-                    <div class="card-title">
-                      Thám tử lừng danh conan tập 84
-                    </div>
-                  </a>
-                  <p class="card-text">Book 's content</p>
+                  <p class="card-text">{{this.masach_sach.MOTA}}</p>
                 </div>
 
                 <div class="card-body">
@@ -196,54 +106,11 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-3">
-            <div class="categories__item set-bg">
-              <div class="card" style=" height:100%">
-                <a href="/book-detail">
-                  <img src="images/conan_84.jpg" class="card-img-top" alt="conan_84" />
-                </a>
-                <div class="card-body">
-                  <a href="/book-detail">
-                    <div class="card-title">
-                      Thám tử lừng danh conan tập 84
-                    </div>
-                  </a>
-                  <p class="card-text">Book 's content</p>
-                </div>
+          {{/each}}
 
-                <div class="card-body">
-                  <button class="btn btn-outline-success">Thêm vào giỏ</button>
-                  <button class="btn btn-outline-success">Mua ngay</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="categories__item set-bg">
-              <div class="card" style=" height:100%">
-                <a href="/book-detail">
-                  <img src="images/conan_84.jpg" class="card-img-top" alt="conan_84" />
-                </a>
-                <div class="card-body">
-                  <a href="/book-detail">
-                    <div class="card-title">
-                      Thám tử lừng danh conan tập 84
-                    </div>
-                  </a>
-                  <p class="card-text">Book 's content</p>
-                </div>
-
-                <div class="card-body">
-                  <button class="btn btn-outline-success">Thêm vào giỏ</button>
-                  <button class="btn btn-outline-success">Mua ngay</button>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
-
 
     <div class="card">
       <div class="card-body">
@@ -251,19 +118,20 @@
       </div>
       <div class="row">
         <div class="categories__slider owl-carousel">
+          {{#each hotNovels}}
           <div class="col-lg-3">
             <div class="categories__item set-bg">
               <div class="card" style=" height:100%">
-                <a href="/book-detail">
-                  <img src="images/conan_84.jpg" class="card-img-top" alt="conan_84" />
+                <a href="/books/{{this.masach_sach.masach}}">
+                  <img src="{{this.masach_sach.HINHANH}}" class="card-img-top" alt="{{this.masach_sach.tensach}}" />
                 </a>
                 <div class="card-body">
-                  <a href="/book-detail">
+                  <a href="/books/{{this.masach_sach.masach}}">
                     <div class="card-title">
-                      Thám tử lừng danh conan tập 84
+                      {{this.masach_sach.tensach}}
                     </div>
                   </a>
-                  <p class="card-text">Book 's content</p>
+                  <p class="card-text">{{this.masach_sach.MOTA}}</p>
                 </div>
 
                 <div class="card-body">
@@ -273,99 +141,12 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-3">
-            <div class="categories__item set-bg">
-              <div class="card" style=" height:100%">
-               <a href="/book-detail">
-                  <img src="images/conan_84.jpg" class="card-img-top" alt="conan_84" />
-                </a>
-                <div class="card-body">
-                  <a href="/book-detail">
-                    <div class="card-title">
-                      Thám tử lừng danh conan tập 84
-                    </div>
-                  </a>
-                  <p class="card-text">Book 's content</p>
-                </div>
+          {{/each}}
 
-                <div class="card-body">
-                  <button class="btn btn-outline-success">Thêm vào giỏ</button>
-                  <button class="btn btn-outline-success">Mua ngay</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="categories__item set-bg">
-              <div class="card" style=" height:100%">
-               <a href="/book-detail">
-                  <img src="images/conan_84.jpg" class="card-img-top" alt="conan_84" />
-                </a>
-                <div class="card-body">
-                  <a href="/book-detail">
-                    <div class="card-title">
-                      Thám tử lừng danh conan tập 84
-                    </div>
-                  </a>
-                  <p class="card-text">Book 's content</p>
-                </div>
-                <div class="card-body">
-                  <button class="btn btn-outline-success">Thêm vào giỏ</button>
-                  <button class="btn btn-outline-success">Mua ngay</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="categories__item set-bg">
-              <div class="card" style=" height:100%">
-                <a href="/book-detail">
-                  <img src="images/conan_84.jpg" class="card-img-top" alt="conan_84" />
-                </a>
-                <div class="card-body">
-                  <a href="/book-detail">
-                    <div class="card-title">
-                      Thám tử lừng danh conan tập 84
-                    </div>
-                  </a>
-                  <p class="card-text">Book 's content</p>
-                </div>
-                <div class="card-body">
-                  <button class="btn btn-outline-success">Thêm vào giỏ</button>
-                  <button class="btn btn-outline-success">Mua ngay</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-3">
-            <div class="categories__item set-bg">
-              <div class="card" style=" height:100%">
-               <a href="/book-detail">
-                  <img src="images/conan_84.jpg" class="card-img-top" alt="conan_84" />
-                </a>
-                <div class="card-body">
-                  <a href="/book-detail">
-                    <div class="card-title">
-                      Thám tử lừng danh conan tập 84
-                    </div>
-                  </a>
-                  <p class="card-text">Book 's content</p>
-                </div>
-
-                <div class="card-body">
-                  <button class="btn btn-outline-success">Thêm vào giỏ</button>
-                  <button class="btn btn-outline-success">Mua ngay</button>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
-
-
     </div>
 
-    
     <!-- Js Plugins -->
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>

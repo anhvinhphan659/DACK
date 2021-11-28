@@ -78,8 +78,10 @@ class UserController {
     // [GET]: /book/category/:category
     async showCategory(req, res, next) {
         var bookCategory = req.params.id;
+        console.log(bookCategory);
 
         const books = await siteService.findByCategory(bookCategory);
+        console.log(books);
         var page = parseInt(req.query.page);
         if (isNaN(page)) {
             page = 1;

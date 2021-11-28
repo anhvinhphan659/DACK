@@ -62,43 +62,49 @@ exports.findByTitle = (title) => {
   });
 }
 
-//Lấy sách mới nhất
-// exports.findNewBooks = (type) => {
-//   return models.sach.findAll({
-//     where:{
-//       masach: {
-//         [Op.like]: type + '%',
-//       }
-//     },
-//     order: [
-//       ['ngayXB', 'DESC'],
-//   ],
-//     limit: 10,
-//   });
-// }
+// Lấy sách mới nhất
+exports.findNewBooks = (type) => {
+  return models.sach.findAll({
+    where: {
+      masach: {
+        [Op.like]: type + '%',
+      }
+    },
+    order: [
+      ['ngayXB', 'DESC'],
+    ],
+    limit: 10,
+  });
+}
 
-// exports.findHotBooks = (type) => {
-//   return models.sach.findAll({
-//     where: {
-//       masach: {
-//         [Op.like]: type + '%',
-//       }
-//     },
+exports.findHotBooks = (type) => {
+  return models.tonkho.findAll({
+    include:[{
+      model: models.sach,
+      as: 'masach_sach',
+      where: {
+        masach: {
+          [Op.like]: type+'%',
+        }
+      }
+    }],
 
-//     include: [{
-//       model: models.tonkho,
-//       as: 'tonkho',
-      
-//     }],
+    order: [
+      ['Tongxuat', "DESC"],
+    ],
 
-//     order:[
-//       ['Tongxuat', "DESC"],
-//     ],
+    limit: 10
 
-//     limit: 10,
-    
-//   });
-// }
+
+
+
+
+
+
+
+
+  });
+}
 
 //Lấy thể loại sách
 exports.listTheloai = () => {
