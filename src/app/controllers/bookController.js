@@ -41,7 +41,13 @@ class UserController {
 
     // [GET]: /book/type/:type
     async showType(req, res, next) {
-        const bookType = req.params.id;
+        var bookType = req.params.id;
+        console.log(bookType);
+
+        //cut string after query page
+        if (String(bookType).indexOf("&&") >= 0) {
+            bookType = String(bookType).split("&&")[0];
+        }
         var type = '';
         if (bookType == 'novel') {
             type = 'TC';
@@ -53,12 +59,17 @@ class UserController {
         const books = await siteService.findByType(type);
 
         var page = parseInt(req.query.page);
+        // console.log(page);
         if (isNaN(page)) {
             page = 1;
         }
+
         const start = (page - 1) * TITLE_PER_PAGE;
         const end = start + TITLE_PER_PAGE;
         const booksArray = multipleSequelizeToObject(books);
+        console.log("Total " + booksArray.length);
+        console.log
+            // console.log(booksArray);
 
         res.render('books/books-type', { title: "Book Selling", books: booksArray.slice(start, end), totalPage: parseInt(booksArray.length / TITLE_PER_PAGE) + 1, currentPage: page, Type: bookType });
         return;
@@ -66,8 +77,8 @@ class UserController {
 
     // [GET]: /book/category/:category
     async showCategory(req, res, next) {
-        const bookCategory = req.params.id;
-        console.log(bookCategory)
+        var bookCategory = req.params.id;
+
         const books = await siteService.findByCategory(bookCategory);
         var page = parseInt(req.query.page);
         if (isNaN(page)) {
@@ -76,6 +87,7 @@ class UserController {
         const start = (page - 1) * TITLE_PER_PAGE;
         const end = start + TITLE_PER_PAGE;
         const booksArray = multipleSequelizeToObject(books);
+        // console.log(booksArray);
 
         res.render('books/books-category', { title: "Book Selling", books: booksArray.slice(start, end), totalPage: parseInt(booksArray.length / TITLE_PER_PAGE) + 1, currentPage: page, category: bookCategory });
         return;
