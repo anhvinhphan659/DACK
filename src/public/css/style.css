@@ -3565,7 +3565,7 @@ ol {
 
 .card-top {
     height: 400px;
-    border-radius: inherit;
+    border-radius: inherit inherit 0px 0px;
     border-style: groove;
     border-width: 1px;
     border-color: inherit;
