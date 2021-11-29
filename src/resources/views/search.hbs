@@ -4,7 +4,7 @@
   <div class="book-information">
     <h2 style="color: orange;">Kết quả tìm kiếm cho: {{searchTitle}}</h2>
     <div class="row">
-       <div class="col-md-2">
+      <div class="col-md-2">
         <p>Sắp xếp theo</p>
       </div>
       <div class="col-md-10">
@@ -21,24 +21,28 @@
       <div class="row">
         {{#each books}}
 
-        <div class="col-sm-6 col-lg-4" style = "margin-bottom: 20px;">
-                    <a href="/books/{{this.masach}}">
-                   
-                    {{!-- <a href="/books/{{this.masach}}"> --}}
-          <div class="card" style=" height:100%">
-              <img src="{{this.HINHANH}}" class="card-img-top" alt="{{this.tensach}}" />
+          <div class="col-sm-6 col-lg-4" style="margin-bottom: 20px;">
+            <a href="/books/{{this.masach}}">
 
-              <div class="card-body">
-                <div class="card-title">
-                  {{this.tensach}}
+              {{!-- <a href="/books/{{this.masach}}"> --}}
+              <div class="card" style=" height:100%">
+                <div class="card-top">
+                  <img
+                    src="{{this.HINHANH}}"
+                    class="card-img-top"
+                    alt="{{this.tensach}}"
+                  />
                 </div>
+                <div class="card-body">
+                  <div class="card-title">
+                    {{this.tensach}}
+                  </div>
 
-                <p class="card-text">{{this.MOTA}}</p>
+                  <p class="card-text">{{this.MOTA}}</p>
+                </div>
               </div>
-            </div>
-        </a>
+            </a>
           </div>
-
 
         {{/each}}
 
