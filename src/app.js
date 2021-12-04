@@ -4,8 +4,11 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const exphbs = require('express-handlebars');
-const categori = require('./app/middlewares/categoryMiddelware');
+const passport = require('./config/auth/passport')
+const session = require('express-session');
 
+const userOnline = require('./app/middlewares/userOnlineMiddleware')
+const categori = require('./app/middlewares/categoryMiddleware');
 const routes = require('./routes');
 
 
@@ -26,8 +29,6 @@ const hbs = exphbs.create({
 app.engine('.hbs', hbs.engine)
 app.set('views', path.join(__dirname, 'resources', 'views'));
 app.set('view engine', '.hbs');
-
-app.use(categori);
 // use logger and use read json , static file
 app.use(logger('dev'));
 app.use(express.json());
@@ -36,6 +37,15 @@ app.use(express.urlencoded({
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+//init passport and session
+app.use(session({secret : process.env.SESSION_SECRET}))
+app.use(passport.initialize());
+app.use(passport.session());
+
+//use middlewares
+app.use(userOnline)
+app.use(categori);
+
 
 routes(app);
 

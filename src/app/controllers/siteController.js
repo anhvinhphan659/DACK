@@ -15,9 +15,7 @@ class SiteController {
 
         const hotComics = await siteservice.findHotBooks('TT');
         const hotNovels = await siteservice.findHotBooks('TC');
-
         // console.log(newComics);
-
         res.render('home', {
             title: 'NoName',
             newComics: multipleSequelizeToObject(newComics),
@@ -58,27 +56,7 @@ class SiteController {
         // res.send(books)
         return;
     }
-    // [GET]: /login 
-    login(req, res, next) {
-        res.render('login', {
-            title: "Book Selling"
-        });
-        return;
-    }
-    //[GET]: /signup 
-    signup(req, res, next) {
-        res.render('signup', {
-            title: 'NoName'
-        });
-        return;
-    }
-    // [GET]: /forget
-    forget(req, res, next) {
-        res.render('forgetpass', {
-            title: 'NoName'
-        });
-        return;
-    }
+
     // [GET]: /shopping-cart
     cart(req, res, next) {
         res.render('books/shopping-cart', {

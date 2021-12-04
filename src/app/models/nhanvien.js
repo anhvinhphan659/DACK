@@ -12,7 +12,7 @@ module.exports = function(sequelize, DataTypes) {
       unique: "USER"
     },
     PASS: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.STRING(100),
       allowNull: false
     },
     HOTEN: {
