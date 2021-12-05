@@ -2,11 +2,8 @@
 
   <div class="container">
 
-
-
     <h1>{{title}}</h1>
     <p>Web bán truyện được ưa thích nhất</p>
-
 
     <div class="card-outline">
       <div class="card-body">
@@ -15,30 +12,34 @@
       <div class="row">
         <div class="categories__slider owl-carousel">
           {{#each newComics}}
-          <div class="col-lg-3">
-            <div class="categories__item set-bg">
-              <div class="card" style=" height:100%">
-                <a href="/books/{{this.masach}}">
-                <div class="card-top">
-                  <img src="{{this.HINHANH}}" class="card-img-top" alt="{{this.tensach}}" />
-                                  </div>
-                   </a>               
-                <div class="card-body">
+            <div class="col-lg-3">
+              <div class="categories__item set-bg">
+                <div class="card" style=" height:100%">
                   <a href="/books/{{this.masach}}">
-                    <div class="card-title">
-                      {{this.tensach}}
+                    <div class="card-top">
+                      <img
+                        src="{{this.HINHANH}}"
+                        class="card-img-top"
+                        alt="{{this.tensach}}"
+                      />
                     </div>
                   </a>
-                  <p class="card-text">{{this.MOTA}}</p>
-                </div>
+                  <div class="card-body">
+                    <a href="/books/{{this.masach}}">
+                      <div class="card-title">
+                        {{this.tensach}}
+                      </div>
+                    </a>
+                    <p class="card-text">{{this.MOTA}}</p>
+                  </div>
 
-                <div class="card-body">
-                  <button class="btn btn-outline-success">Thêm vào giỏ</button>
-                  <button class="btn btn-outline-success">Mua ngay</button>
+                  <div class="card-body">
+                    <button class="btn btn-outline-success">Thêm vào giỏ</button>
+                    <button class="btn btn-outline-success">Mua ngay</button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           {{/each}}
 
         </div>
@@ -52,29 +53,33 @@
       <div class="row">
         <div class="categories__slider owl-carousel">
           {{#each newNovels}}
-          <div class="col-lg-3">
-            <div class="categories__item set-bg">
-              <div class="card" style=" height:100%">
-                <a href="/books/{{this.masach}}">
-                <div class="card-top">
-                  <img src="{{this.HINHANH}}" class="card-img-top" alt="{{this.tensach}}" />
-                </div>
-                </a>
-                <div class="card-body">
+            <div class="col-lg-3">
+              <div class="categories__item set-bg">
+                <div class="card" style=" height:100%">
                   <a href="/books/{{this.masach}}">
-                    <div class="card-title">
-                      {{this.tensach}}
+                    <div class="card-top">
+                      <img
+                        src="{{this.HINHANH}}"
+                        class="card-img-top"
+                        alt="{{this.tensach}}"
+                      />
                     </div>
                   </a>
-                  <p class="card-text">{{this.MOTA}}</p>
-                </div>
-                <div class="card-body">
-                  <button class="btn btn-outline-success">Thêm vào giỏ</button>
-                  <button class="btn btn-outline-success">Mua ngay</button>
+                  <div class="card-body">
+                    <a href="/books/{{this.masach}}">
+                      <div class="card-title">
+                        {{this.tensach}}
+                      </div>
+                    </a>
+                    <p class="card-text">{{this.MOTA}}</p>
+                  </div>
+                  <div class="card-body">
+                    <button class="btn btn-outline-success">Thêm vào giỏ</button>
+                    <button class="btn btn-outline-success">Mua ngay</button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           {{/each}}
 
         </div>
@@ -88,68 +93,76 @@
       <div class="row">
         <div class="categories__slider owl-carousel">
           {{#each hotComics}}
-          <div class="col-lg-3">
-            <div class="categories__item set-bg">
-              <div class="card" style=" height:100%">
-                <a href="/books/{{this.masach_sach.masach}}">
-                <div class="card-top">
-                  <img src="{{this.masach_sach.HINHANH}}" class="card-img-top" alt="{{this.masach_sach.tensach}}" />
-                </div>
-                  
-                </a>
-                <div class="card-body">
+            <div class="col-lg-3">
+              <div class="categories__item set-bg">
+                <div class="card" style=" height:100%">
                   <a href="/books/{{this.masach_sach.masach}}">
-                    <div class="card-title">
-                      {{this.masach_sach.tensach}}
+                    <div class="card-top">
+                      <img
+                        src="{{this.masach_sach.HINHANH}}"
+                        class="card-img-top"
+                        alt="{{this.masach_sach.tensach}}"
+                      />
                     </div>
-                  </a>
-                  <p class="card-text">{{this.masach_sach.MOTA}}</p>
-                </div>
 
-                <div class="card-body">
-                  <button class="btn btn-outline-success">Thêm vào giỏ</button>
-                  <button class="btn btn-outline-success">Mua ngay</button>
+                  </a>
+                  <div class="card-body">
+                    <a href="/books/{{this.masach_sach.masach}}">
+                      <div class="card-title">
+                        {{this.masach_sach.tensach}}
+                      </div>
+                    </a>
+                    <p class="card-text">{{this.masach_sach.MOTA}}</p>
+                  </div>
+
+                  <div class="card-body">
+                    <button class="btn btn-outline-success">Thêm vào giỏ</button>
+                    <button class="btn btn-outline-success">Mua ngay</button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           {{/each}}
 
         </div>
       </div>
     </div>
 
-   <div class="card-outline">
+    <div class="card-outline">
       <div class="card-body">
         <h4>Top truyện chữ hot</h4>
       </div>
       <div class="row">
         <div class="categories__slider owl-carousel">
           {{#each hotNovels}}
-          <div class="col-lg-3">
-            <div class="categories__item set-bg">
-              <div class="card" style=" height:100%">
-                <a href="/books/{{this.masach_sach.masach}}">
-                <div class="card-top">
-                  <img src="{{this.masach_sach.HINHANH}}" class="card-img-top" alt="{{this.masach_sach.tensach}}" />
-                </div>
-                </a>
-                <div class="card-body">
+            <div class="col-lg-3">
+              <div class="categories__item set-bg">
+                <div class="card" style=" height:100%">
                   <a href="/books/{{this.masach_sach.masach}}">
-                    <div class="card-title">
-                      {{this.masach_sach.tensach}}
+                    <div class="card-top">
+                      <img
+                        src="{{this.masach_sach.HINHANH}}"
+                        class="card-img-top"
+                        alt="{{this.masach_sach.tensach}}"
+                      />
                     </div>
                   </a>
-                  <p class="card-text">{{this.masach_sach.MOTA}}</p>
-                </div>
+                  <div class="card-body">
+                    <a href="/books/{{this.masach_sach.masach}}">
+                      <div class="card-title">
+                        {{this.masach_sach.tensach}}
+                      </div>
+                    </a>
+                    <p class="card-text">{{this.masach_sach.MOTA}}</p>
+                  </div>
 
-                <div class="card-body">
-                  <button class="btn btn-outline-success">Thêm vào giỏ</button>
-                  <button class="btn btn-outline-success">Mua ngay</button>
+                  <div class="card-body">
+                    <button class="btn btn-outline-success">Thêm vào giỏ</button>
+                    <button class="btn btn-outline-success">Mua ngay</button>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
           {{/each}}
 
         </div>
