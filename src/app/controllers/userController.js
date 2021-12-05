@@ -3,6 +3,7 @@ class UserController{
 
     // [GET]: /users/
     index(req,res,next) {
+
          res.send('respond with a resource'); 
     }
     // [GET]: /users/personal-page

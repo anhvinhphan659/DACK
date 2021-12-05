@@ -10,6 +10,7 @@ class SiteController {
 
     // [GET]: /
     async index(req, res, next) {
+        req.session.returnTo = req.originalUrl;
         const newComics = await siteservice.findNewBooks('TT');
         const newNovels = await siteservice.findNewBooks('TC');
 
@@ -26,7 +27,7 @@ class SiteController {
     }
     // [GET]: /search 
     async search(req, res, next) {
-
+        req.session.returnTo = req.originalUrl;
         const title = req.query.title;
         console.log(req.query.title);
         var page = parseInt(req.query.page);
@@ -59,6 +60,7 @@ class SiteController {
 
     // [GET]: /shopping-cart
     cart(req, res, next) {
+        req.session.returnTo = req.originalUrl;
         res.render('books/shopping-cart', {
             title: "Book Selling"
         });

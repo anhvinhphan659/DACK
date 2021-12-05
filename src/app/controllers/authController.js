@@ -52,7 +52,8 @@ class authController {
     loginhandler(req, res, next){
         try {
             if(req.user){
-                res.redirect('/')
+                res.redirect(req.session.returnTo||'/')
+                delete req.session.returnTo
             }else{
                 res.redirect('/login')
             }
@@ -95,7 +96,8 @@ class authController {
         req.body.username = req.body.USER
         req.body.password = req.body.REPASS
         passport.authenticate('local')(req, res, function () {
-            res.redirect('/');
+            res.redirect(req.session.returnTo||'/');
+            delete req.session.returnTo
         })
 
         } catch (error) {

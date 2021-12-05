@@ -11,7 +11,7 @@ class UserController {
 
     /// [GET]: /book/allBooks
     async showAll(req, res, next) {
-
+        req.session.returnTo = req.originalUrl;
         var page = parseInt(req.query.page);
         if (isNaN(page)) {
             page = 1;
@@ -35,6 +35,7 @@ class UserController {
 
     // [GET]: /book/type/:type
     async showType(req, res, next) {
+        req.session.returnTo = req.originalUrl;
         var bookType = req.params.id;
         console.log(bookType);
 
@@ -57,7 +58,6 @@ class UserController {
         if (isNaN(page)) {
             page = 1;
         }
-
         const start = (page - 1) * TITLE_PER_PAGE;
         const end = start + TITLE_PER_PAGE;
         const booksArray = multipleSequelizeToObject(books);
@@ -77,6 +77,7 @@ class UserController {
 
     // [GET]: /book/category/:category
     async showCategory(req, res, next) {
+        req.session.returnTo = req.originalUrl;
         var bookCategory = req.params.id;
         console.log(bookCategory);
 
@@ -103,9 +104,9 @@ class UserController {
 
     // [GET]: /book/:masach  (Chi tiết truyện)
     async show(req, res, next) {
+        req.session.returnTo = req.originalUrl;
         const bookId = req.params.id;
         const book = await siteService.findById(bookId);
-
         res.render('books/book-detail', {
             title: "Book Selling",
             book: SequelizeToObject(book)
