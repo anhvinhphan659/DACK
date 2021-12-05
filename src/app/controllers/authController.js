@@ -98,6 +98,7 @@ class authController {
         passport.authenticate('local')(req, res, function () {
             res.redirect(req.session.returnTo||'/');
             delete req.session.returnTo
+            // res.redirect(/);
         })
 
         } catch (error) {

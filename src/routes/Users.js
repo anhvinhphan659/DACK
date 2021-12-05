@@ -5,7 +5,7 @@ const UserController = require('../app/controllers/userController')
     /* GET users listing. */
 
 
-router.get('/personal-page', UserController.personal)
+router.get('/:username', UserController.personal)
 router.get('/', UserController.index)
 
 
