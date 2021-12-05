@@ -69,15 +69,18 @@ class authController {
         || req.body.HINHANH==="" || req.body.NGAYSINH ===""
             || req.body.SDT ==="" || req.body.PASS ==="" || req.body.REPASS ==="" || req.body.DIACHI ===""){
                 res.redirect('/signup?errorEmpty=true')
+                next();
         }
         var check = await authservice.checkUSER(req.body.USER)
         var checkPASS = !(req.body.PASS === req.body.REPASS)
         // check exist user
         if(check){
             res.redirect('/signup?errorUSER=true')
+            next();
         }
         if(checkPASS){
             res.redirect('/signup?errorPASS=true')
+            next()
         }
         req.body.MAKH = await authservice.genIDKH()
         req.body.PASS = await authservice.hashPassword(req.body.PASS)
