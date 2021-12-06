@@ -94,19 +94,15 @@ exports.findHotBooks = (type) => {
     ],
 
     limit: 10
-
-
-
-
-
-
-
-
-
   });
 }
 
 //Lấy thể loại sách
 exports.listTheloai = () => {
   return models.theloai.findAll();
+}
+
+//Lấy thông tin 1 tài khoản
+exports.getOneAccount = (username) => {
+  return models.khachhang.findOne({where: {USER: username}})
 }

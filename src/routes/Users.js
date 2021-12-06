@@ -6,6 +6,7 @@ const UserController = require('../app/controllers/userController')
 
 
 router.get('/:username', UserController.personal)
+router.put('/:username/edit', UserController.edit)
 router.get('/', UserController.index)
 
 
