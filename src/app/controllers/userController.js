@@ -8,11 +8,14 @@ class UserController{
     }
     // [GET]: /users/personal-page
     personal(req,res,next) {
-        res.render('user/personal-page', { title: "Book Selling" });
-    }
-    
+        console.log(req.params.username)
+        if(req.user.USER === req.params.username) {
 
-    
-
+            res.render('user/personal-page', { title: "Book Selling", user: req.user });
+        }
+        else {
+            res.send("THONG BAO KHONG HOP LE")
+        }        
+    }   
 }
 module.exports = new UserController

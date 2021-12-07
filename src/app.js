@@ -19,14 +19,20 @@ const app = express();
 
 //setting handlebars
 
-const hbs = exphbs.create({
-    extname: '.hbs',
+// const hbs = exphbs.create({
+//     extname: '.hbs',
     
-});
+// });
 
 
 // view engine setup
-app.engine('.hbs', hbs.engine)
+app.engine(
+    '.hbs', 
+    exphbs.engine({
+        extname :'.hbs',
+        helpers: require('./helpers/handlebars')
+    })
+);
 app.set('views', path.join(__dirname, 'resources', 'views'));
 app.set('view engine', '.hbs');
 // use logger and use read json , static file
