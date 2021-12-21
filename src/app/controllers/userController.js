@@ -8,7 +8,6 @@ class UserController{
 
     // [GET]: /users/
     async index(req,res,next) {
-
          res.send('respond with a resource'); 
     }
     // [GET]: /users/personal-page
@@ -39,6 +38,31 @@ class UserController{
         else {
             res.redirect('/')
         }        
+    }
+    // [POST]: user/:username/changepass
+    async changepass (req, res, next) {
+        try {
+            res.send(req.body)
+        } catch (error) {
+            next(error);
+        }
+    }
+    // [GET]: user/:username/changepass
+    async getchangepass (req, res, next) {
+        try {
+            if(req.user){
+                if(req.user.USER === req.params.username){
+                    res.render('user/changepass', {})
+                }else{
+                    res.send('respond with a resource'); 
+                }
+            }else{
+                res.redirect('/')
+            }
+            
+        } catch (error) {
+            next(error);
+        }
     }
 }
 module.exports = new UserController

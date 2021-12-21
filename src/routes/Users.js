@@ -8,6 +8,8 @@ const UserController = require('../app/controllers/userController')
 router.get('/:username', UserController.personal)
 router.put('/:username/edit',upload.single('file'), UserController.edit)
 router.get('/', UserController.index)
+router.get('/:username/changepass', UserController.getchangepass)
+router.post('/:username/changepass', UserController.changepass)
 
 
 

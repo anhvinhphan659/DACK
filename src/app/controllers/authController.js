@@ -82,7 +82,6 @@ class authController {
             res.redirect('/signup?errorPASS=true')
             next()
         }
-        
         await authservice.create(req)
         req.body.username = req.body.USER
         req.body.password = req.body.REPASS
@@ -91,11 +90,12 @@ class authController {
             delete req.session.returnTo
             // res.redirect(/);
         })
-
         } catch (error) {
             next(error);
         }   
     }
+    
+
 
 }
 module.exports = new authController
