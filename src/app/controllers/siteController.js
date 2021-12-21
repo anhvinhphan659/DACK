@@ -1,5 +1,6 @@
 //connect to service for site
-
+const BookService = require('../services/bookService');
+const Cart = require('../models/cart');
 const siteservice = require('../services/siteService');
 const {
     multipleSequelizeToObject
@@ -10,21 +11,21 @@ class SiteController {
 
     // [GET]: /
     async index(req, res, next) {
-        req.session.returnTo = req.originalUrl;
-        const newComics = await siteservice.findNewBooks('TT');
-        const newNovels = await siteservice.findNewBooks('TC');
-        const hotComics = await siteservice.findHotBooks('TT');
-        const hotNovels = await siteservice.findHotBooks('TC');
-        // console.log(newComics);
-        res.render('home', {
-            title: 'NoName',
-            newComics: multipleSequelizeToObject(newComics),
-            newNovels: multipleSequelizeToObject(newNovels),
-            hotComics: multipleSequelizeToObject(hotComics),
-            hotNovels: multipleSequelizeToObject(hotNovels)
-        });
-    }
-    // [GET]: /search 
+            req.session.returnTo = req.originalUrl;
+            const newComics = await siteservice.findNewBooks('TT');
+            const newNovels = await siteservice.findNewBooks('TC');
+            const hotComics = await siteservice.findHotBooks('TT');
+            const hotNovels = await siteservice.findHotBooks('TC');
+            // console.log(newComics);
+            res.render('home', {
+                title: 'NoName',
+                newComics: multipleSequelizeToObject(newComics),
+                newNovels: multipleSequelizeToObject(newNovels),
+                hotComics: multipleSequelizeToObject(hotComics),
+                hotNovels: multipleSequelizeToObject(hotNovels)
+            });
+        }
+        // [GET]: /search 
     async search(req, res, next) {
         req.session.returnTo = req.originalUrl;
         const title = req.query.title;
@@ -42,7 +43,7 @@ class SiteController {
         const booksArray = multipleSequelizeToObject(books);
         // console.log(booksArray.slice(0, 5));
         // booksArray = booksArray.splice(0, skip);
-        const totalPage = parseInt(booksArray.length % TITLE_PER_PAGE) == 0 ?  parseInt(booksArray.length / TITLE_PER_PAGE) : parseInt(booksArray.length / TITLE_PER_PAGE) + 1;
+        const totalPage = parseInt(booksArray.length % TITLE_PER_PAGE) == 0 ? parseInt(booksArray.length / TITLE_PER_PAGE) : parseInt(booksArray.length / TITLE_PER_PAGE) + 1;
 
 
         res.render('search', {
@@ -64,6 +65,17 @@ class SiteController {
             title: "Book Selling"
         });
         return;
+    }
+
+    // [POST]: /shopping-cart
+    async addToCart(req, res, next) {
+        console.log("----------------Post from cart-------------------");
+        var addedBook = await BookService.findById(req.body.bookid);
+
+
+        Cart.save(addedBook);
+        console.log(Cart.getCart());
+        res.render("books/shopping-cart", { cartBooks: Cart.getCart().buyBooks });
     }
 }
 module.exports = new SiteController

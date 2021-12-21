@@ -41,8 +41,11 @@
           </div>
         </div>
         <div>
-          <button type="button" class="btn btn-primary">Thêm vào giỏ hàng</button>
+          <form action="/shopping-cart" method="POST">
+          <input type="hidden" name="bookid" value="{{book.masach}}">
+          <button type="submit" name="add-to-cart" class="btn btn-primary">Thêm vào giỏ hàng</button>
           <button type="button" class="btn btn-warning">Đặt ngay</button>
+          </form>
         </div>
         <div style="display:flex">
           <p>Gọi đặt hàng: </p>
