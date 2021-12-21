@@ -6,7 +6,7 @@ const logger = require('morgan');
 const exphbs = require('express-handlebars');
 const passport = require('./config/auth/passport')
 const session = require('express-session');
-
+const methodOverride = require('method-override')
 const userOnline = require('./app/middlewares/userOnlineMiddleware')
 const categori = require('./app/middlewares/categoryMiddleware');
 const routes = require('./routes');
@@ -51,6 +51,9 @@ app.use(passport.session());
 //use middlewares
 app.use(userOnline)
 app.use(categori);
+
+//middleware method
+app.use(methodOverride('_method'))
 
 
 routes(app);

@@ -82,20 +82,7 @@ class authController {
             res.redirect('/signup?errorPASS=true')
             next()
         }
-        req.body.MAKH = await authservice.genIDKH()
-        req.body.PASS = await authservice.hashPassword(req.body.PASS)
-        var khach = await authservice.getkhachhang().create({
-            MAKH : req.body.MAKH,
-            HOTEN : req.body.HOTEN,
-            PASS : req.body.PASS,
-            USER : req.body.USER,
-            PHAI : req.body.PHAI,
-            NGAYSINH : req.body.NGAYSINH,
-            HINHANH : req.body.HINHANH,
-            EMAIL : req.body.EMAIL,
-            SDT : req.body.SDT,
-            DIACHI : req.body.DIACHI,
-        })
+        await authservice.create(req)
         req.body.username = req.body.USER
         req.body.password = req.body.REPASS
         passport.authenticate('local')(req, res, function () {
@@ -103,11 +90,12 @@ class authController {
             delete req.session.returnTo
             // res.redirect(/);
         })
-
         } catch (error) {
             next(error);
         }   
     }
+    
+
 
 }
 module.exports = new authController

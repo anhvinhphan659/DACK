@@ -41,12 +41,17 @@ module.exports = function(sequelize, DataTypes) {
     SL: {
       type: DataTypes.INTEGER,
       allowNull: true
+    },
+    IDHINHANH: {
+      type: DataTypes.STRING(100),
+      allowNull: true
     }
   }, {
     sequelize,
     tableName: 'sach',
     hasTrigger: true,
-    timestamps: false,
+    timestamps: true,
+    paranoid: true,
     indexes: [
       {
         name: "PRIMARY",

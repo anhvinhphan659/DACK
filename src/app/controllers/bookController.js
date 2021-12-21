@@ -1,4 +1,4 @@
-const siteService = require('../services/siteService');
+const bookService = require('../services/bookService');
 const {
     SequelizeToObject
 } = require('../services/util/sequelize');
@@ -7,7 +7,7 @@ const {
 } = require('../services/util/sequelize');
 const TITLE_PER_PAGE = 12;
 
-class UserController {
+class BookController {
 
     /// [GET]: /book/allBooks
     async showAll(req, res, next) {
@@ -18,7 +18,7 @@ class UserController {
         }
         const start = (page - 1) * TITLE_PER_PAGE;
         const end = start + TITLE_PER_PAGE;
-        const books = await siteService.AllBooks();
+        const books = await bookService.AllBooks();
 
 
         const booksArray = multipleSequelizeToObject(books);
@@ -51,7 +51,7 @@ class UserController {
                 type = 'TT';
             }
         }
-        const books = await siteService.findByType(type);
+        const books = await bookService.findByType(type);
 
         var page = parseInt(req.query.page);
         // console.log(page);
@@ -61,8 +61,7 @@ class UserController {
         const start = (page - 1) * TITLE_PER_PAGE;
         const end = start + TITLE_PER_PAGE;
         const booksArray = multipleSequelizeToObject(books);
-        console.log("Total " + booksArray.length);
-        console.log
+
         // console.log(booksArray);
 
         res.render('books/books-type', {
@@ -79,10 +78,10 @@ class UserController {
     async showCategory(req, res, next) {
         req.session.returnTo = req.originalUrl;
         var bookCategory = req.params.id;
-        console.log(bookCategory);
 
-        const books = await siteService.findByCategory(bookCategory);
-        console.log(books);
+
+        const books = await bookService.findByCategory(bookCategory);
+ 
         var page = parseInt(req.query.page);
         if (isNaN(page)) {
             page = 1;
@@ -106,7 +105,7 @@ class UserController {
     async show(req, res, next) {
         req.session.returnTo = req.originalUrl;
         const bookId = req.params.id;
-        const book = await siteService.findById(bookId);
+        const book = await bookService.findById(bookId);
         res.render('books/book-detail', {
             title: "Book Selling",
             book: SequelizeToObject(book)
@@ -114,4 +113,4 @@ class UserController {
         return;
     }
 }
-module.exports = new UserController
+module.exports = new BookController

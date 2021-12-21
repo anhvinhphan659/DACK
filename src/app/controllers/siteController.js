@@ -13,7 +13,6 @@ class SiteController {
         req.session.returnTo = req.originalUrl;
         const newComics = await siteservice.findNewBooks('TT');
         const newNovels = await siteservice.findNewBooks('TC');
-
         const hotComics = await siteservice.findHotBooks('TT');
         const hotNovels = await siteservice.findHotBooks('TC');
         // console.log(newComics);

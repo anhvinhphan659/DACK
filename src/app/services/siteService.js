@@ -94,15 +94,6 @@ exports.findHotBooks = (type) => {
     ],
 
     limit: 10
-
-
-
-
-
-
-
-
-
   });
 }
 
