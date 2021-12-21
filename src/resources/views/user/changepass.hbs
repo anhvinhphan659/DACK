@@ -23,7 +23,8 @@
                 </span>
             </div>
             <div class="mt-4" id="message">
-                {{message}}
+               
+                 <div class="mt-1 mb-1 text-center text-danger"> {{message}}</div>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-success btn-lg float-right" id="btn" disabled>Save</button>
@@ -34,7 +35,8 @@
 <script>
     var renew = $('#inputPasswordNewVerify')
     var newpa = $('#inputPasswordNew')
-
+    var massage = '{{message}}'
+    
     $('#inputPasswordNewVerify').on('change', function(e) {
         $('#message').empty()
         if(renew.val() == newpa.val()){
@@ -46,7 +48,6 @@
         }
 
     })
-
     $('#inputPasswordNew').on('change', function(e) {
         $('#message').empty()
         if(renew.val() == newpa.val()){
