@@ -42,11 +42,16 @@ module.exports = function(sequelize, DataTypes) {
     EMAIL: {
       type: DataTypes.STRING(50),
       allowNull: true
+    },
+    IDHINHANH: {
+      type: DataTypes.STRING(100),
+      allowNull: true
     }
   }, {
     sequelize,
     tableName: 'khachhang',
-    timestamps: false,
+    timestamps: true,
+    paranoid: true,
     indexes: [
       {
         name: "PRIMARY",

@@ -101,8 +101,3 @@ exports.findHotBooks = (type) => {
 exports.listTheloai = () => {
   return models.theloai.findAll();
 }
-
-//Lấy thông tin 1 tài khoản
-exports.getOneAccount = (username) => {
-  return models.khachhang.findOne({where: {USER: username}})
-}

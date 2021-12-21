@@ -50,11 +50,16 @@ module.exports = function(sequelize, DataTypes) {
     LOAINV: {
       type: DataTypes.STRING(3),
       allowNull: true
+    },
+    IDHINHANH: {
+      type: DataTypes.STRING(100),
+      allowNull: true
     }
   }, {
     sequelize,
     tableName: 'nhanvien',
-    timestamps: false,
+    timestamps: true,
+    paranoid: true,
     indexes: [
       {
         name: "PRIMARY",

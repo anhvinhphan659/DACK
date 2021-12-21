@@ -5,6 +5,7 @@ const {
     Op
 } = require("sequelize");
 const bcrypt = require("bcrypt")
+const cloudImage = require("../../config/uploadIMG/cloudinary")
 exports.findUser = (username) => {
     return models.khachhang.findOne({where :{ USER : username}});
 }
@@ -54,4 +55,29 @@ exports.getkhachhang = () =>{
 }
 exports.hashPassword= (pass) =>{
     return bcrypt.hash(pass,10)
+}
+
+exports.create = async (req) => {
+        req.body.MAKH = await this.genIDKH()
+        req.body.PASS = await this.hashPassword(req.body.PASS)
+        req.body.HINHANH = ""
+        if (req.file) {
+            var path = 'img/customer/' + req.body.MAKH + '/';
+            var result = await cloudImage.uploadIMG(req.file.path, path);
+            req.body.HINHANH = result.secure_url;
+            req.body.IDHINHANH = result.public_id;
+        }
+        var khach = await models.khachhang.create({
+            MAKH : req.body.MAKH,
+            HOTEN : req.body.HOTEN,
+            PASS : req.body.PASS,
+            USER : req.body.USER,
+            PHAI : req.body.PHAI,
+            NGAYSINH : req.body.NGAYSINH,
+            HINHANH : req.body.HINHANH,
+            EMAIL : req.body.EMAIL,
+            SDT : req.body.SDT,
+            DIACHI : req.body.DIACHI,
+        })
+        return khach
 }
