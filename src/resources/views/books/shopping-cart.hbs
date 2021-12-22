@@ -17,28 +17,32 @@
                 </tr>
             </thead>
             <tbody>
+                {{#each cartBooks}}
                 <tr>
+                    
                     <td data-th="Product">
                         <div class="row">
                             <div class="col-lg-3 hidden-xs">
-                                <img src="https://cdn0.fahasa.com/media/catalog/product/cache/1/small_image/600x600/9df78eab33525d08d6e5fb8d27136e95/i/m/image_195509_1_46642.jpg"
+                                <img src = "{{this.HINHANH}}"
                                     alt="Sản phẩm 1" class="img-responsive" width="100">
                             </div>
                             <div class="col-sm-9 ">
-                                <h4 class="nomargin">Trạng Quỷnh tập 340</h4>
+                                <h4 class="nomargin">{{this.tensach}}</h4>
                             </div>
                         </div>
                     </td>
-                    <td data-th="Price">10.000 đ</td>
-                    <td data-th="Quantity"><input class="form-control text-center" value="1" type="number">
-                    <td data-th="Subtotal">10.000 đ</td>
+                    <td data-th="Price">{{this.gia}}</td>
+                    <td data-th="Quantity"><input class="form-control text-center" value="{{this.qty}}" type="number" onchange="updateTotal()">
+                    <td data-th="Subtotal">{{this.subPrice}}</td>
                     </td>
                     <td class="actions" data-th="">
                         <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o">Loại bỏ</i>
                         </button>
                     </td>
+                    
                 </tr>
-                <tr>
+                {{/each}}
+                {{!-- <tr>
                     <td data-th="Product">
                         <div class="row">
                             <div class="col-lg-3 hidden-xs"><img
@@ -58,14 +62,14 @@
                         <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o">Loại bỏ</i>
 
                     </td>
-                </tr>
+                </tr> --}}
             </tbody>
             <tfoot>
                 <tr>
                     <td><a href="/" class="btn btn-warning"><i class="fa fa-angle-left"></i> Tiếp tục mua hàng</a>
                     </td>
                     <td colspan="2" class="hidden-xs"> </td>
-                    <td class="hidden-xs text-center"><strong>Tổng tiền 500.000 đ</strong>
+                    <td class="hidden-xs text-center"><strong id="total-price">Tổng tiền 500.000 đ</strong>
                     </td>
                     <td><a href="#" class="btn btn-success btn-block">Thanh toán <i class="fa fa-angle-right"></i></a>
                     </td>
@@ -73,4 +77,20 @@
             </tfoot>
         </table>
     </div>
+<script>
 
+function updateTotal()
+{
+    var allSubPrices=$("[data-th=Subtotal]");
+    var total=0;
+    var totalStrong=$('strong')[0];
+    for (let i=0;i<allSubPrices.length;i++)
+    {
+        total+=parseInt(allSubPrices[i].innerText);
+    }
+
+    totalStrong.innerHTML="Tổng tiền "+String(total)+" đ";
+}
+
+updateTotal();
+</script>
