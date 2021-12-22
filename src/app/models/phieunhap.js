@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('phieunhap', {
     MAPN: {
-      type: DataTypes.STRING(5),
+      type: DataTypes.STRING(6),
       allowNull: false,
       primaryKey: true
     },

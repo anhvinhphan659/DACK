@@ -137,21 +137,113 @@
   </div>
 
   <div class="book-information">
-    <h2>
-      Nhận xét khách hàng
-    </h2>
-    <div class="row">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  <section class="content-item" id="comments">
+    <div class="container">   
+    	<div class="row justify-content-md-center" >
+            <div class="col-sm-8">   
+              {{#if user}}
+                <form>
+                	<h3 class="pull-left">New Comment : {{user.HOTEN}}</h3>
+                	<button type="submit" id="submit-comment" class="btn btn-normal pull-right">Submit</button>
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-sm-3 col-lg-2 hidden-xs">
+                            	<img class="img-responsive" src="{{user.HINHANH}}" alt="">
+                            </div>
+                            <div class="form-group col-xs-12 col-sm-9 col-lg-10">
+                                <textarea class="form-control" id="message" placeholder="Your message" required=""></textarea>
+                            </div>
+                        </div>  	
+                    </fieldset>
+                </form>
+                {{else}}
+                <div class="container">
+                  <div class="row justify-content-md-center text-center">
+                    <div> Đăng nhập để bình luận </div>
+                    <a href="/login" class="btn btn-primary col-4">Đăng nhập</a>
+                  </div>
+                </div>
+              {{/if}}
+                <h3 class="quantity-cmt"></h3>
+                <div id="comment-show">
 
-      <div class="col-1">
-        <img src="/images/avatar.jpg" / style="width: 50px;height:50px;">
-      </div>
-      <div class="col-11">
 
-        <p><a href="#">NoName's user</a></p>
-        <p>This is my comment</p>
-      </div>
-
-
+                </div>
+                <!-- COMMENT 1 - START -->
+                <!-- <div class="media">
+                    <a class="pull-left" href="#"><img class="media-object" src="{{user.HINHANH}}" alt=""></a>
+                    <div class="media-body">
+                        <h4 class="media-heading">John Doe</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        <ul class="list-unstyled list-inline media-detail pull-left">
+                            <li><i class="fa fa-calendar"></i>27/02/2014</li>
+                        </ul>
+                    </div>
+                </div> -->
+                <!-- COMMENT 1 - END -->
+                
+                
+            
+            </div>
+        </div>
     </div>
+  </section>
+  
   </div>
 </div>
+
+<script>
+  var bookid = '{{book.masach}}'
+  $('#submit-comment').on('click', function(e) {
+    e.preventDefault();
+    text = $('#message').val()
+    var user = '{{user.USER}}'
+    console.log(bookid + ": " + user)
+
+    if(text != ''){
+      $.ajax({
+        url:`/books/${bookid}/comment`,
+        method: "POST",
+        data:{
+          NOIDUNG: text,
+          USER: user
+        },success: function(data) {
+          console.log('success')
+          loadFunction()
+        }
+
+      })
+      $('#message').val('');
+    }else{
+      alert('hãy viết comment')
+    }
+  })
+  function loadFunction(){
+    $.getJSON(`${bookid}/comment`, function(data) {
+      $('h3.quantity-cmt').empty();
+      $('h3.quantity-cmt').append(data.cmt.length+' Comments')
+      let html = ''
+      for (const key of data.cmt){
+        html+= `<div class="media">
+                    <a class="pull-left" href="#"><img class="media-object" src="${key.HINHANH}" alt=""></a>
+                    <div class="media-body">
+                        <h4 class="media-heading">${key.HOTEN}</h4>
+                        <p>${key.NOIDUNG}</p>
+                        <ul class="list-unstyled list-inline media-detail pull-left">
+                            <li><i class="fa fa-calendar"></i>${key.THOIGIAN}</li>
+                        </ul>
+                    </div>
+                </div>`
+      }
+      $('#comment-show').html(html)
+    })
+
+
+  }
+  loadFunction()
+
+
+
+</script>

@@ -8,7 +8,8 @@ module.exports = function(sequelize, DataTypes) {
     },
     Ten: {
       type: DataTypes.STRING(50),
-      allowNull: true
+      allowNull: true,
+      unique: "nxb_Ten_uindex"
     },
     diachi: {
       type: DataTypes.STRING(50),
@@ -29,6 +30,14 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "manxb" },
+        ]
+      },
+      {
+        name: "nxb_Ten_uindex",
+        unique: true,
+        using: "BTREE",
+        fields: [
+          { name: "Ten" },
         ]
       },
     ]

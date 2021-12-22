@@ -65,7 +65,8 @@ class UserController{
                     var titile = req.query.passErr
                     if(titile == true ){
                         message = 'password old wrong'
-                    }else{
+                    }
+                    if(titile == false){
                         message = 'change success'
                     }
                     res.render('user/changepass', {message})

@@ -101,7 +101,7 @@ class BookController {
         return;
     }
 
-    // [GET]: /book/:masach  (Chi tiết truyện)
+    // [GET]: /books/:masach  (Chi tiết truyện)
     async show(req, res, next) {
         req.session.returnTo = req.originalUrl;
         const bookId = req.params.id;
@@ -111,6 +111,30 @@ class BookController {
             book: SequelizeToObject(book)
         })
         return;
+    }
+    //[POST]: /books/:masach/comment
+    async inputcmt(req, res, next) {
+        try {
+            if(req.user){
+                var cmt = await bookService.writecomment(req)
+                res.status(200).json({})
+            }else{
+                res.status(404).json({})
+            }
+        } catch (error) {
+            next(error);
+        }
+        
+    }
+    //[GET]: /books/:masach/comment
+    async showcmt (req, res, next) {
+        try {
+            var cmt = await bookService.getcomment(req)
+            res.status(200).json({cmt : cmt[0]})
+        } catch (error) {
+            next(error);
+        }
+
     }
 }
 module.exports = new BookController
