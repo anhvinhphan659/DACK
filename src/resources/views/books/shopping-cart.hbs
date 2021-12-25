@@ -27,12 +27,13 @@
                                     alt="Sản phẩm 1" class="img-responsive" width="100">
                             </div>
                             <div class="col-sm-9 ">
+                                <input type="hidden" class="id-book-hidden" value="{{this.masach}}">
                                 <h4 class="nomargin">{{this.tensach}}</h4>
                             </div>
                         </div>
                     </td>
                     <td data-th="Price">{{this.gia}}</td>
-                    <td data-th="Quantity"><input class="form-control text-center" value="{{this.qty}}" type="number" onchange="updateTotal()">
+                    <td data-th="Quantity"><input class="form-control text-center" value="{{this.SOLUONG}}" type="number" onchange="updateTotal()" min="1">
                     <td data-th="Subtotal">{{this.subPrice}}</td>
                     </td>
                     <td class="actions" data-th="">
@@ -71,7 +72,11 @@
                     <td colspan="2" class="hidden-xs"> </td>
                     <td class="hidden-xs text-center"><strong id="total-price">Tổng tiền 500.000 đ</strong>
                     </td>
-                    <td><a href="#" class="btn btn-success btn-block">Thanh toán <i class="fa fa-angle-right"></i></a>
+                    <td>
+                        <form action="/shopping-cart/payment" method="POST">
+                            <button type="submit" class="btn btn-success btn-block" id="submit-payment">Thanh toán <i class="fa fa-angle-right"></i></button>
+                        </form>
+                        
                     </td>
                 </tr>
             </tfoot>
@@ -81,16 +86,54 @@
 
 function updateTotal()
 {
+    var allPrices=$('[data-th=Price]');
     var allSubPrices=$("[data-th=Subtotal]");
+    var counts=$('.form-control.text-center');
     var total=0;
     var totalStrong=$('strong')[0];
-    for (let i=0;i<allSubPrices.length;i++)
+    if(allSubPrices)
     {
-        total+=parseInt(allSubPrices[i].innerText);
+        for (let i=0;i<allSubPrices.length;i++)
+        {
+            price=parseInt(allPrices[i].innerHTML);
+            c=parseInt(counts[i].value);
+            subprice=price*c;
+            allSubPrices[i].innerHTML=subprice;
+            total+=subprice;
+        }
     }
+    
 
     totalStrong.innerHTML="Tổng tiền "+String(total)+" đ";
 }
 
+
+
 updateTotal();
 </script>
+<script>
+    let masachs=$('id-book-hidden'):
+   $('#submit-payment').on('click',function(e)
+   {
+       e.preventDefault();
+        for (let i =0;i<masachs.length();i++)
+        {
+            loadBook(masachs[i].val());
+        }
+    
+   })
+function loadBook(bookID)
+{
+    $.ajax({
+            url:'/api/books/'+bookID,
+            method:'GET',
+            
+            success: function(data)
+            {
+                console.log(data);
+            }
+        })
+}
+</script>
+
+

@@ -6,12 +6,14 @@ const AuthController = require('../app/controllers/authController')
     //import passport
 const passport = require('./../config/auth/passport')
     //upload file img
-const upload = require('../config/uploadIMG/multer')
+const upload = require('../config/uploadIMG/multer');
+const { route } = require('./Cart');
 
 
-//for site
-router.get('/shopping-cart', SiteController.cart)
-router.post('/shopping-cart', SiteController.addToCart)
+
+
+
+
 router.get('/search', SiteController.search)
 router.get('/', SiteController.index)
     // for auth
