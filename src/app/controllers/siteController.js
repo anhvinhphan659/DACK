@@ -1,7 +1,8 @@
 //connect to service for site
 const BookService = require('../services/bookService');
-const Cart = require('../models/cart');
+
 const siteservice = require('../services/siteService');
+
 const {
     multipleSequelizeToObject
 } = require('../services/util/sequelize');
@@ -16,6 +17,7 @@ class SiteController {
             const newNovels = await siteservice.findNewBooks('TC');
             const hotComics = await siteservice.findHotBooks('TT');
             const hotNovels = await siteservice.findHotBooks('TC');
+            console.log(newComics);
             // console.log(newComics);
             res.render('home', {
                 title: 'NoName',
@@ -58,24 +60,5 @@ class SiteController {
         return;
     }
 
-    // [GET]: /shopping-cart
-    cart(req, res, next) {
-        req.session.returnTo = req.originalUrl;
-        res.render('books/shopping-cart', {
-            title: "Book Selling"
-        });
-        return;
-    }
-
-    // [POST]: /shopping-cart
-    async addToCart(req, res, next) {
-        console.log("----------------Post from cart-------------------");
-        var addedBook = await BookService.findById(req.body.bookid);
-
-
-        Cart.save(addedBook);
-        console.log(Cart.getCart());
-        res.render("books/shopping-cart", { cartBooks: Cart.getCart().buyBooks });
-    }
 }
 module.exports = new SiteController
