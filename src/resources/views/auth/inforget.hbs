@@ -1,5 +1,4 @@
 
-
   <div class="container">
      <h1>{{title}}</h1>
     <p>Web bán truyện được ưa thích nhất</p>
@@ -26,22 +25,12 @@
 
         <div class="row justify-content-center">
           <div class="col-md-5">
-            <div class="row">
-              <form id = "senduser" action="" method="post" >
-                  <div class="col-md-12 form-group">
-                <label for="user">Nhập tên tài khoản</label>
-                <input type="text" id="user" name = "user" placeholder = "nhập tên đăng nhập" class="form-control form-control-lg">
-              </div>
-              </form>
-              
-            </div>
-
             <div class="row align-items-end justify-content-center text-center">
-              <div class="col-12">
-                <input type="submit" form="senduser" value="Xin cấp lại mật khẩu" class="btn btn-primary btn-lg px-5">
-              </div>
+                {{messages}}
+                <div class="left-float">
+                    <a href="/forgetpass" class="btn btn-link">Quay lại</a>
+                </div>
             </div>
-            
           </div>
         </div>
 
@@ -56,4 +45,3 @@
     </div>
 
 </div>
-

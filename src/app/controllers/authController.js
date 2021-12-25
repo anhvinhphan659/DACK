@@ -48,6 +48,28 @@ class authController {
         });
         return;
     }
+    // [POST]: /forget
+    async forgetPost(req, res, next) {
+        try {
+            var email = await authservice.getMail(req)
+            const token = await authservice.sendEmail(email)
+            
+            
+
+            var messages
+            if (token) {
+                let hide = email.EMAIL.split("@")[0].length - 2;//<-- number of characters to hide
+                var r = new RegExp(".{"+hide+"}@", "g")
+                var jmail = email.EMAIL.replace(r, "***@" );
+                messages = ` vui lòng check mail ${jmail} để lấy link  ( tồn tại trong 20 phút ) `
+            }else {
+                messages = ` Đã có lỗi xảy ra , xin hãy thử lại  `
+            }
+            res.render('auth/inforget',{messages})
+        } catch (error) {
+            next(error);
+        } 
+    }
     //[POST]: /login
     loginhandler(req, res, next){
         try {
@@ -88,14 +110,39 @@ class authController {
         passport.authenticate('local')(req, res, function () {
             res.redirect(req.session.returnTo||'/');
             delete req.session.returnTo
-            // res.redirect(/);
         })
         } catch (error) {
             next(error);
         }   
     }
-    
-
+    //
+    async resetPass (req, res, next) {
+        try {
+            const token = req.query.token 
+            const check = await authservice.checktoken(token)
+            if(check) {
+                res.render('auth/repass',{token})
+            }else{
+                res.send('respond with a resource')
+            }
+            
+        } catch (error) {
+            next(error);
+        }
+    }
+    //
+    async resetPassPost(req, res, next) {
+        try {
+            const change = await authservice.resetPass(req)
+            if(change){
+                res.redirect('/login')
+            }else{
+                res.redirect('back')
+            } 
+        } catch (error) {
+            next(error);
+        }
+    }
 
 }
 module.exports = new authController
