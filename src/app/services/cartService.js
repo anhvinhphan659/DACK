@@ -35,3 +35,14 @@ exports.payCart = (id_dh) => {
         }
     })
 }
+
+exports.removeCart = (currentID, bookID, customerID) => {
+    models.dathang.destroy({
+        where: {
+            TRANGTHAI: "DANGDAT",
+            iddathang: currentID,
+            masach: bookID,
+            makh: customerID,
+        }
+    });
+}

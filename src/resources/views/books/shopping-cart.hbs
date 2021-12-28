@@ -1,49 +1,101 @@
+<script>
+
+    function updateTotal() { 
+        var allPrices=$('[data-th=Price]'); 
+        var   allSubPrices=$("[data-th=Subtotal]"); 
+        var  counts=$('.form-control.text-center'); 
+        var total=0; 
+        var   totalStrong=$('#total-price')[0]; 
+        for(let i=0;i<allPrices.length;i++)
+        {
+            var subprice=parseInt(allPrices[i].innerHTML)*parseInt(counts[i].value);
+            allSubPrices[i].innerHTML=subprice;
+            total+=subprice;
+            console.log(subprice);
+        }
+        console.log(total);
+
+        totalStrong.innerHTML=String("Tổng tiền "+String(total)+"đ");
+    }
+  updateTotal();
+  
+  var btnSubmit=$('#submit-payment')[0];
 
 
-    <h1>{{title}}</h1>
-    <p>Web bán truyện được ưa thích nhất</p>
-    
-   
-    <h2 class="text-center">Giỏ hàng</h2>
-    <div class="container">
-        <table id="cart" class="table table-hover table-condensed">
-            <thead>
-                <tr>
-                    <th style="width:50%">Tên sản phẩm</th>
-                    <th style="width:10%">Giá</th>
-                    <th style="width:8%">Số lượng</th>
-                    <th style="width:22%">Thành tiền</th>
-                    <th style="width:10%"> </th>
-                </tr>
-            </thead>
-            <tbody>
-                {{#each cartBooks}}
-                <tr>
-                    
-                    <td data-th="Product">
-                        <div class="row">
-                            <div class="col-lg-3 hidden-xs">
-                                <img src = "{{this.HINHANH}}"
-                                    alt="Sản phẩm 1" class="img-responsive" width="100">
-                            </div>
-                            <div class="col-sm-9 ">
-                                <input type="hidden" class="id-book-hidden" value="{{this.masach}}">
-                                <h4 class="nomargin">{{this.tensach}}</h4>
-                            </div>
-                        </div>
-                    </td>
-                    <td data-th="Price">{{this.gia}}</td>
-                    <td data-th="Quantity"><input class="form-control text-center" value="{{this.SOLUONG}}" type="number" onchange="updateTotal()" min="1">
-                    <td data-th="Subtotal">{{this.subPrice}}</td>
-                    </td>
-                    <td class="actions" data-th="">
-                        <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o">Loại bỏ</i>
-                        </button>
-                    </td>
-                    
-                </tr>
-                {{/each}}
-                {{!-- <tr>
+    function loadBook(bookID)
+    {
+        $.ajax({
+            url:'/api/books/'+bookID,
+            method:"GET",
+            data:{},
+            success:function(data)
+            {
+                console.log(data.book);
+            }
+            
+        });
+    }
+  
+</script>
+
+<h1>{{title}}</h1>
+<p>Web bán truyện được ưa thích nhất</p>
+
+<h2 class="text-center">Giỏ hàng</h2>
+<div class="container">
+  <table id="cart" class="table table-hover table-condensed">
+    <thead>
+      <tr>
+        <th style="width:50%">Tên sản phẩm</th>
+        <th style="width:10%">Giá</th>
+        <th style="width:8%">Số lượng</th>
+        <th style="width:22%">Thành tiền</th>
+        <th style="width:10%"> </th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each cartBooks}}
+        <tr>
+
+          <td data-th="Product">
+            <div class="row">
+              <div class="col-lg-3 hidden-xs">
+                <img
+                  src="{{this.HINHANH}}"
+                  alt="Sản phẩm 1"
+                  class="img-responsive"
+                  width="100"
+                />
+              </div>
+              <div class="col-sm-9">
+                <input
+                  type="hidden"
+                  class="id-book-hidden"
+                  value="{{this.masach}}"
+                />
+                <h4 class="nomargin">{{this.tensach}}</h4>
+              </div>
+            </div>
+          </td>
+          <td data-th="Price">{{this.gia}}</td>
+          <td data-th="Quantity"><input
+              class="form-control text-center"
+              value="{{this.SOLUONG}}"
+              type="number"
+              onchange="updateTotal()"
+              min="1"
+            />
+            <td data-th="Subtotal">{{this.subPrice}}</td>
+          </td>
+          <td class="actions" data-th="">
+            <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o">Loại
+                bỏ</i>
+            </button>
+          </td>
+
+        </tr>
+      {{/each}}
+      {{! <tr>
                     <td data-th="Product">
                         <div class="row">
                             <div class="col-lg-3 hidden-xs"><img
@@ -63,77 +115,54 @@
                         <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o">Loại bỏ</i>
 
                     </td>
-                </tr> --}}
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td><a href="/" class="btn btn-warning"><i class="fa fa-angle-left"></i> Tiếp tục mua hàng</a>
-                    </td>
-                    <td colspan="2" class="hidden-xs"> </td>
-                    <td class="hidden-xs text-center"><strong id="total-price">Tổng tiền 500.000 đ</strong>
-                    </td>
-                    <td>
-                        <form action="/shopping-cart/payment" method="POST">
-                            <button type="submit" class="btn btn-success btn-block" id="submit-payment">Thanh toán <i class="fa fa-angle-right"></i></button>
-                        </form>
-                        
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
+                </tr> }}
+    </tbody>
+    <tfoot>
+      <tr>
+        <td><a href="/" class="btn btn-warning"><i class="fa fa-angle-left"></i>
+            Tiếp tục mua hàng</a>
+        </td>
+        <td colspan="2" class="hidden-xs"> </td>
+        <td class="hidden-xs text-center"><strong id="total-price">Tổng tiền
+            500.000 đ</strong>
+        </td>
+        <td>
+          <form action="/shopping-cart/payment" method="POST">
+            <button
+              type="submit"
+              class="btn btn-success btn-block"
+              id="submit-payment"
+            >Thanh toán <i class="fa fa-angle-right"></i></button>
+          </form>
+
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Launch demo modal
+</button>
+{{!-- MODAL ANNOUCEMENT--}}
+{{#if payment}}
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" zrole="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      {{payment.message}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
     </div>
-<script>
-
-function updateTotal()
-{
-    var allPrices=$('[data-th=Price]');
-    var allSubPrices=$("[data-th=Subtotal]");
-    var counts=$('.form-control.text-center');
-    var total=0;
-    var totalStrong=$('strong')[0];
-    if(allSubPrices)
-    {
-        for (let i=0;i<allSubPrices.length;i++)
-        {
-            price=parseInt(allPrices[i].innerHTML);
-            c=parseInt(counts[i].value);
-            subprice=price*c;
-            allSubPrices[i].innerHTML=subprice;
-            total+=subprice;
-        }
-    }
-    
-
-    totalStrong.innerHTML="Tổng tiền "+String(total)+" đ";
-}
-
-
-
-updateTotal();
-</script>
-<script>
-    let masachs=$('id-book-hidden'):
-   $('#submit-payment').on('click',function(e)
-   {
-       e.preventDefault();
-        for (let i =0;i<masachs.length();i++)
-        {
-            loadBook(masachs[i].val());
-        }
-    
-   })
-function loadBook(bookID)
-{
-    $.ajax({
-            url:'/api/books/'+bookID,
-            method:'GET',
-            
-            success: function(data)
-            {
-                console.log(data);
-            }
-        })
-}
-</script>
-
-
+  </div>
+</div>
+{{/if}}

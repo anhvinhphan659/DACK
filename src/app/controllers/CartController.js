@@ -69,6 +69,7 @@ class CartController {
                             SOLUONG: 1,
                             HINHANH: addbookIMG,
                             tensach: addbookName,
+                            gia: addbookPrice,
                         });
 
                     }
@@ -87,8 +88,45 @@ class CartController {
             res.redirect('/login');
         } else {
             //handle to database
-            res.send(Cart.getCart());
+            // res.send(Cart.getCart());
+            try {
+                const carts = await CartService.findCurrentCartByUser(req.user.MAKH);
 
+
+                const cart = carts[0]
+                if (cart.length > 0) {
+
+                    const currentID = cart[0].iddathang;
+                    //check books in carts
+                    var isSuccess = true;
+                    var msg = "Thanh toán thành công";
+                    for (let i = 0; i < cart.length; i++) {
+                        if (cart[i].SOLUONG > cart[i].SL) {
+                            isSuccess = false;
+                            msg = "Thanh toán thất bại! Số lượng đặt mua trong giỏ hàng không hợp lệ hoặc sách đã hết! Mong quý khách kiểm tra lại!"
+                        }
+                    }
+                    //if success update state of cart
+                    if (isSuccess) {
+                        CartService.payCart(iddathang);
+                    }
+
+                    console.log(currentID);
+                    var payment = {
+                        success: isSuccess,
+                        message: msg
+                    };
+                    res.render("books/shopping-cart", {
+                        cartBooks: cart,
+                        payment: payment
+                    });
+                }
+
+
+
+            } catch (err) {
+                next(err);
+            }
         }
     }
 }

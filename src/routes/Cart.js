@@ -5,7 +5,7 @@ const CartController = require('../app/controllers/CartController');
 
 router.get('/', CartController.cart);
 router.post('/', CartController.addToCart);
-router.post('/payment-cart', CartController.payCart);
+router.post('/payment', CartController.payCart);
 
 
 module.exports = router
