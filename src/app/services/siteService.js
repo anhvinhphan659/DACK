@@ -71,8 +71,9 @@ exports.findNewBooks = (type) => {
       }
     },
     order: [
-      ['ngayXB', 'DESC'],
+      ['createdAt', 'DESC'],
     ],
+    
     limit: 10,
   });
 }
