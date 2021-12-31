@@ -46,8 +46,6 @@ function initModels(sequelize) {
   khachhang.hasMany(phieumua, { as: "phieumuas", foreignKey: "MAKH"});
   token_pass.belongsTo(khachhang, { as: "MAKH_khachhang", foreignKey: "MAKH"});
   khachhang.hasMany(token_pass, { as: "token_passes", foreignKey: "MAKH"});
-  phieumua.belongsTo(nhanvien, { as: "MANV_nhanvien", foreignKey: "MANV"});
-  nhanvien.hasMany(phieumua, { as: "phieumuas", foreignKey: "MANV"});
   phieunhap.belongsTo(nhanvien, { as: "MANV_nhanvien", foreignKey: "MANV"});
   nhanvien.hasMany(phieunhap, { as: "phieunhaps", foreignKey: "MANV"});
   phieunhap.belongsTo(nxb, { as: "MANXB_nxb", foreignKey: "MANXB"});

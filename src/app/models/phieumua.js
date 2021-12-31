@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('phieumua', {
     MAPM: {
-      type: DataTypes.STRING(5),
+      type: DataTypes.STRING(20),
       allowNull: false,
       primaryKey: true
     },
@@ -16,14 +16,6 @@ module.exports = function(sequelize, DataTypes) {
       references: {
         model: 'khachhang',
         key: 'MAKH'
-      }
-    },
-    MANV: {
-      type: DataTypes.STRING(6),
-      allowNull: true,
-      references: {
-        model: 'nhanvien',
-        key: 'MANV'
       }
     }
   }, {
@@ -44,13 +36,6 @@ module.exports = function(sequelize, DataTypes) {
         using: "BTREE",
         fields: [
           { name: "MAKH" },
-        ]
-      },
-      {
-        name: "FK_PMUA_NHANVIEN",
-        using: "BTREE",
-        fields: [
-          { name: "MANV" },
         ]
       },
     ]
