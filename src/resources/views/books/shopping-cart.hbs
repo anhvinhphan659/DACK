@@ -1,44 +1,6 @@
-<script>
-
-    function updateTotal() { 
-        var allPrices=$('[data-th=Price]'); 
-        var   allSubPrices=$("[data-th=Subtotal]"); 
-        var  counts=$('.form-control.text-center'); 
-        var total=0; 
-        var   totalStrong=$('#total-price')[0]; 
-        for(let i=0;i<allPrices.length;i++)
-        {
-            var subprice=parseInt(allPrices[i].innerHTML)*parseInt(counts[i].value);
-            allSubPrices[i].innerHTML=subprice;
-            total+=subprice;
-            console.log(subprice);
-        }
-        console.log(total);
-
-        totalStrong.innerHTML=String("Tổng tiền "+String(total)+"đ");
-    }
-  updateTotal();
-  
-  var btnSubmit=$('#submit-payment')[0];
 
 
-    function loadBook(bookID)
-    {
-        $.ajax({
-            url:'/api/books/'+bookID,
-            method:"GET",
-            data:{},
-            success:function(data)
-            {
-                console.log(data.book);
-            }
-            
-        });
-    }
-  
-</script>
-
-<h1>{{title}}</h1>
+<h1>NoName</h1>
 <p>Web bán truyện được ưa thích nhất</p>
 
 <h2 class="text-center">Giỏ hàng</h2>
@@ -55,8 +17,8 @@
     </thead>
     <tbody>
       {{#each cartBooks}}
-        <tr>
-
+        
+        <tr class="row-data" id="{{this.masach}}">
           <td data-th="Product">
             <div class="row">
               <div class="col-lg-3 hidden-xs">
@@ -72,28 +34,32 @@
                   type="hidden"
                   class="id-book-hidden"
                   value="{{this.masach}}"
+                  name="bookID"
                 />
                 <h4 class="nomargin">{{this.tensach}}</h4>
               </div>
             </div>
           </td>
-          <td data-th="Price">{{this.gia}}</td>
-          <td data-th="Quantity"><input
-              class="form-control text-center"
+          <td class="book-price" data-th="Price">{{this.gia}}</td>
+          <td  data-th="Quantity"><input
+              class="form-control text-center book-qty"
               value="{{this.SOLUONG}}"
+              
               type="number"
               onchange="updateTotal()"
               min="1"
             />
-            <td data-th="Subtotal">{{this.subPrice}}</td>
+            <td class="book-subtotal" data-th="Subtotal">{{this.subPrice}}</td>
           </td>
           <td class="actions" data-th="">
-            <button class="btn btn-danger btn-sm"><i class="fa fa-trash-o">Loại
+            <input type="hidden" value="{{makh}}" name="MAKH"/>
+            <button class="btn btn-danger btn-sm" onclick="removeBook('{{this.masach}}','{{makh}}')"><i class="fa fa-trash-o">Loại
                 bỏ</i>
             </button>
           </td>
-
+          
         </tr>
+        
       {{/each}}
       {{! <tr>
                     <td data-th="Product">
@@ -127,7 +93,7 @@
             500.000 đ</strong>
         </td>
         <td>
-          <form action="/shopping-cart/payment" method="POST">
+          <form action="/shopping-cart/payment" method="POST" onsubmit="return checkSubmit();">
             <button
               type="submit"
               class="btn btn-success btn-block"
@@ -166,3 +132,85 @@
   </div>
 </div>
 {{/if}}
+<script>
+
+    function updateTotal() { 
+        var allPrices=document.getElementsByClassName("book-price"); 
+        var   allSubPrices=document.getElementsByClassName("book-subtotal"); 
+        var  counts=document.getElementsByClassName("book-qty"); 
+        var total=0; 
+        var   totalStrong=document.getElementById("total-price"); 
+        for(let i=0;i<allPrices.length;i++)
+        {
+            var subprice=parseInt(allPrices[i].innerHTML)*parseInt(counts[i].value);
+            allSubPrices[i].innerHTML=subprice;
+            total+=subprice;
+            console.log(subprice);
+        }
+        console.log(total);
+
+        totalStrong.innerHTML=String("Tổng tiền "+String(total)+"đ");
+    }
+  updateTotal();
+  
+  var btnSubmit=$('#submit-payment')[0];
+
+
+function loadBook(bookID)
+{
+    $.ajax({
+        url:'/api/books/'+bookID,
+        method:"GET",
+        data:{},
+        success:function(data)
+        {
+            console.log(data.book);
+        }
+        
+    });
+}
+  
+</script>
+<script>
+function removeBook(bookID,userID)
+{
+  console.log(bookID+"-"+userID+"is remove");
+  
+  //remove element display;
+  document.getElementById(bookID).remove();
+  //update total
+  updateTotal();
+  
+  //check is user
+  if(userID!='')
+  {//remove in database
+  removeFromCart(bookID,userID);
+  }
+}
+
+function removeFromCart(bookID,userID)
+{
+  $.ajax({
+        url:'/api/dathang/'+userID+'/'+bookID,
+        method:"POST",
+        success:function(data)
+        {
+            console.log(data);
+        }
+        
+    });
+}
+
+function checkSubmit()
+{
+  const books=document.getElementsByClassName("book-price");
+  var btnSubmit=document.getElementById("submit-payment");
+  if(books.length<=0)
+  {
+    console.log("Can't submit");
+    return false;
+  }
+  console.log("Submit success!");
+  return true;
+}
+</script>

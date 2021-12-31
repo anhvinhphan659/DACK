@@ -31,15 +31,13 @@ function initModels(sequelize) {
   var tonkho = _tonkho(sequelize, DataTypes);
 
   khachhang.belongsToMany(sach, { as: 'MASACH_saches', through: binhluan, foreignKey: "USER", otherKey: "MASACH" });
-  khachhang.belongsToMany(sach, { as: 'masach_saches', through: dathang, foreignKey: "makh", otherKey: "masach" });
   phieumua.belongsToMany(sach, { as: 'MASACH_sach_ct_phieumuas', through: ct_phieumua, foreignKey: "MAPM", otherKey: "MASACH" });
   phieunhap.belongsToMany(sach, { as: 'MASACH_sach_ct_phieunhaps', through: ct_phieunhap, foreignKey: "MAPN", otherKey: "MASACH" });
   sach.belongsToMany(khachhang, { as: 'USER_khachhangs', through: binhluan, foreignKey: "MASACH", otherKey: "USER" });
-  sach.belongsToMany(khachhang, { as: 'makh_khachhangs', through: dathang, foreignKey: "masach", otherKey: "makh" });
   sach.belongsToMany(phieumua, { as: 'MAPM_phieumuas', through: ct_phieumua, foreignKey: "MASACH", otherKey: "MAPM" });
   sach.belongsToMany(phieunhap, { as: 'MAPN_phieunhaps', through: ct_phieunhap, foreignKey: "MASACH", otherKey: "MAPN" });
   sach.belongsToMany(theloai, { as: 'maTL_theloais', through: theloaicuasach, foreignKey: "masach", otherKey: "maTL" });
-  theloai.belongsToMany(sach, { as: 'masach_sach_theloaicuasaches', through: theloaicuasach, foreignKey: "maTL", otherKey: "masach" });
+  theloai.belongsToMany(sach, { as: 'masach_saches', through: theloaicuasach, foreignKey: "maTL", otherKey: "masach" });
   binhluan.belongsTo(khachhang, { as: "USER_khachhang", foreignKey: "USER"});
   khachhang.hasMany(binhluan, { as: "binhluans", foreignKey: "USER"});
   dathang.belongsTo(khachhang, { as: "makh_khachhang", foreignKey: "makh"});

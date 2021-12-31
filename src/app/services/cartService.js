@@ -12,14 +12,33 @@ exports.findCurrentCartByUser = async(id_user) => {
 }
 
 exports.addNewBookToCart = async(currentID, bookID, customerID) => {
-    await models.dathang.create({
-        iddathang: currentID,
+    await models.dathang.findOne({
+        where: {
+            iddathang: currentID,
+            masach: bookID,
+            makh: customerID,
+        }
+    }).then(function(obj) {
+        if (!obj) {
+            return models.dathang.create({
+                iddathang: currentID,
+                masach: bookID,
+                makh: customerID,
+                TRANGTHAI: 'DANGDAT',
+                SOLUONG: 1,
+                THOIGIAN: new Date(),
+            });
+        }
+    });
+
+}
+
+exports.findBookInCart = async(userID, bookID) => {
+    await models.dathang.findOne({
         masach: bookID,
-        makh: customerID,
-        TRANGTHAI: 'DANGDAT',
-        SOLUONG: 1,
-        THOIGIAN: new Date(),
-    })
+        makh: userID,
+        TRANGTHAI: "DANGDAT",
+    });
 }
 
 exports.generateIDDatHang = (userID) => {
@@ -36,11 +55,10 @@ exports.payCart = (id_dh) => {
     })
 }
 
-exports.removeCart = (currentID, bookID, customerID) => {
+exports.removeCart = (bookID, customerID) => {
     models.dathang.destroy({
         where: {
             TRANGTHAI: "DANGDAT",
-            iddathang: currentID,
             masach: bookID,
             makh: customerID,
         }
