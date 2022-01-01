@@ -2,6 +2,11 @@ const { models, sequelize } = require("../../config/db");
 const { Op } = require("sequelize");
 const sach = require("../models/sach");
 
+exports.getAllCartByUser = async(userID) => {
+    return await sequelize.query("SELECT * FROM `dathang` AS `dathang` INNER JOIN `sach` as `sachs` " +
+        "ON `dathang`.`masach`=`sachs`.`masach` " +
+        "WHERE `dathang`.`TRANGTHAI`='DADAT' AND `dathang`.`makh`= '" + userID + "'");
+}
 
 exports.findCurrentCartByUser = async(id_user) => {
     return await sequelize.query(
@@ -32,6 +37,8 @@ exports.addNewBookToCart = async(currentID, bookID, customerID) => {
     });
 
 }
+
+
 
 exports.findBookInCart = async(userID, bookID) => {
     await models.dathang.findOne({

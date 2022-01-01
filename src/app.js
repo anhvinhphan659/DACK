@@ -44,7 +44,11 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 //init passport and session
-app.use(session({ secret: process.env.SESSION_SECRET }))
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true,
+}))
 app.use(passport.initialize());
 app.use(passport.session());
 

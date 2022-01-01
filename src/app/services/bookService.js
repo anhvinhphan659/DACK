@@ -48,6 +48,7 @@ exports.findByCategory = (category) => {
 
 //Lấy sách theo tên
 exports.findByTitle = (title) => {
+
     return models.sach.findAll({
         where: {
             tensach: {
@@ -58,16 +59,17 @@ exports.findByTitle = (title) => {
 };
 
 exports.updateQtyBook = async(bookid, qty) => {
-    await models.sach.findOne({ masach: bookid }).then(function(obj) {
-        if (obj) {
-            const oldQty = obj.SL;
-            models.dathang.update({ SL: oldQty - qty }, {
-                where: {
-                    masach: bookid,
-                }
-            });
-        }
-    })
+    console.log(bookid);
+    console.log(qty);
+    const book = await models.sach.findOne({
+        masach: bookid,
+    });
+    console.log(book);
+    if (book) {
+        const newQty = book.SL - qty;
+        console.log(newQty);
+        models.sach.update({ SL: newQty }, { where: { masach: bookid } });
+    }
 
 }
 

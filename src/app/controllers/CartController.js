@@ -1,5 +1,7 @@
 // const dathang = require('../models/dathang');
 const Cart = require("../models/CartModel");
+const phieumuaService = require("../services/phieumuaService");
+const ct_phieumuaService = require("../services/ct_phieumuaService");
 const CartService = require('../services/cartService');
 const BookService = require('../services/bookService');
 const {
@@ -7,6 +9,8 @@ const {
     SequelizeToObject
 } = require('../services/util/sequelize');
 const { generator } = require("rand-token");
+const { all } = require("sequelize/dist/lib/operators");
+const phieumua = require("../models/phieumua");
 
 class CartController {
     // [GET]: /shopping-cart
@@ -14,20 +18,27 @@ class CartController {
         // console.log("get cart--------------------------------");
 
         if (!req.user) { //not login
-            console.log(Cart.getCart().listBook);
+            if (!req.session.cart) {
+                console.log("Initialize cart");
+                req.session.cart = { listBook: [] };
+            }
+            console.log(req.session.cart.listBook);
+
             res.render('books/shopping-cart', {
                 title: "Book Selling",
-                cartBooks: Cart.getCart().listBook,
+                cartBooks: req.session.cart.listBook,
 
             });
         } else { //login
+
             req.session.returnTo = req.originalUrl;
             // console.log("get cart--------------------------------");
             // console.log(req.user);
+
             const carts = await CartService.findCurrentCartByUser(req.user.MAKH);
-            console.log(Cart.getCart());
+
             var cart = carts[0];
-            const staticCart = Cart.getCart().listBook;
+            const staticCart = req.session.cart.listBook;
             var iddh = 0;
             //push all book before login to cart
             if (cart.length > 0) {
@@ -59,6 +70,11 @@ class CartController {
     // [POST]: /shopping-cart
     async addToCart(req, res, next) {
             if (!req.user) { //not login
+                if (!req.session.cart) {
+                    console.log("Initialize cart");
+                    req.session.cart = { listBook: [] };
+                }
+
                 const addbookID = req.body.bookid;
                 const addbookIMG = req.body.bookIMG;
                 const addbookName = req.body.bookName;
@@ -70,9 +86,10 @@ class CartController {
                     tensach: addbookName,
                     gia: addbookPrice,
                 }
-                var booksInCart = Cart.getCart().listBook;
+                var booksInCart = req.session.cart.listBook;
                 Cart.addNewBookToCart(booksInCart, addedBook);
-                console.log(Cart.getCart().listBook);
+                console.log(req.session.cart.listBook);
+                req.session.save();
 
                 res.render('books/shopping-cart', { cartBooks: booksInCart });
 
@@ -164,17 +181,22 @@ class CartController {
                     if (isSuccess) {
                         CartService.payCart(currentID);
                         result = "Thanh toán thành công"
-                    } else {
-                        result = "Thanh toán thất bại!";
-                        //update in databse
-                        for (let i = 0; i < cart; i++) {
+                            //update in databse
+                        await phieumuaService.addPhieuMua(currentID, req.user.MAKH);
+                        for (let i = 0; i < cart.length; i++) {
                             const bookID = cart[i].masach;
                             const qty = cart[i].SOLUONG;
-                            BookService.updateQtyBook(bookID, qty);
+                            console.log(bookID);
+                            await BookService.updateQtyBook(bookID, qty);
+                            await ct_phieumuaService.addctPhieumua(currentID, bookID, qty);
                         }
                         await CartService.payCart(currentID);
 
+                    } else {
+                        result = "Thanh toán thất bại!";
+
                     }
+
 
                     console.log(currentID);
 
@@ -186,13 +208,13 @@ class CartController {
             }
         }
     }
-    async getpayCart(req, res, next) {
 
-    }
+    //[GET] /shopping-cart/history
+    async getHistory(req, res, next) {
 
-    //[POST]:/shopping-cart/remove/:idsach
-    async removeCart(req, res, next) {
-
+        const allCart = await CartService.getAllCartByUser(req.user.id);
+        console.log(allCart[0]);
+        res.send(allCart[0]);
     }
 
 
