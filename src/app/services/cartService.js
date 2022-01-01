@@ -38,6 +38,16 @@ exports.addNewBookToCart = async(currentID, bookID, customerID) => {
 
 }
 
+exports.updateQtyBookInCart = async(userID, bookID, qty) => {
+    await models.dathang.update({ SOLUONG: qty }, {
+        where: {
+            TRANGTHAI: 'DANGDAT',
+            makh: userID,
+            masach: bookID,
+        }
+    });
+}
+
 
 
 exports.findBookInCart = async(userID, bookID) => {

@@ -3713,3 +3713,19 @@ ol {
 .bottom-body {
     height: 100px;
 }
+
+.line-break {
+    border-bottom: 2px solid black;
+}
+
+.cart-break {
+    border-bottom: 2px solid #064f7d;
+    width: fit-content;
+    color: #0d8cdb;
+    font-style: italic;
+}
+
+.cart-card {
+    border-bottom: 1px solid black;
+    margin-bottom: 35px;
+}

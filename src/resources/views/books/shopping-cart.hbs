@@ -44,9 +44,9 @@
           <td  data-th="Quantity"><input
               class="form-control text-center book-qty"
               value="{{this.SOLUONG}}"
-              
+              id="input-{{this.masach}}"
               type="number"
-              onchange="updateTotal()"
+              onchange="updataTotalAndQty('{{this.masach}}')"
               min="1"
             />
             <td class="book-subtotal" data-th="Subtotal">{{this.subPrice}}</td>
@@ -90,7 +90,7 @@
         </td>
         <td colspan="2" class="hidden-xs"> </td>
         <td class="hidden-xs text-center"><strong id="total-price">Tổng tiền
-            500.000 đ</strong>
+            0 đ</strong>
         </td>
         <td>
           <form action="/shopping-cart/payment" method="POST" onsubmit="return checkSubmit();">
@@ -134,23 +134,25 @@
 {{/if}}
 <script>
 
-    function updateTotal() { 
-        var allPrices=document.getElementsByClassName("book-price"); 
-        var   allSubPrices=document.getElementsByClassName("book-subtotal"); 
-        var  counts=document.getElementsByClassName("book-qty"); 
-        var total=0; 
-        var   totalStrong=document.getElementById("total-price"); 
-        for(let i=0;i<allPrices.length;i++)
-        {
-            var subprice=parseInt(allPrices[i].innerHTML)*parseInt(counts[i].value);
-            allSubPrices[i].innerHTML=subprice;
-            total+=subprice;
-            console.log(subprice);
-        }
-        console.log(total);
-
-        totalStrong.innerHTML=String("Tổng tiền "+String(total)+"đ");
+function updateTotal() { 
+    var allPrices=document.getElementsByClassName("book-price"); 
+    var   allSubPrices=document.getElementsByClassName("book-subtotal"); 
+    var  counts=document.getElementsByClassName("book-qty"); 
+    var total=0; 
+    var   totalStrong=document.getElementById("total-price"); 
+    for(let i=0;i<allPrices.length;i++)
+    {
+        var subprice=parseInt(allPrices[i].innerHTML)*parseInt(counts[i].value);
+        allSubPrices[i].innerHTML=subprice;
+        total+=subprice;
+        console.log(subprice);
+        
+        
     }
+    console.log(total);
+
+    totalStrong.innerHTML=String("Tổng tiền "+String(total)+"đ");
+}
   updateTotal();
   
   var btnSubmit=$('#submit-payment')[0];
@@ -199,6 +201,28 @@ function removeFromCart(bookID,userID)
         }
         
     });
+}
+
+function updateQtyInCart(bookID,Qty)
+{
+  $.ajax({
+        url:'/api/update/dathang/'+bookID+'/'+Qty,
+        method:"POST",
+        success:function(data)
+        {
+            console.log(data);
+        }
+        
+    });
+}
+
+function updataTotalAndQty(bookid)
+{
+  updateTotal();
+  const inputBook=document.getElementById("input-"+bookid);
+  const qty=parseInt(inputBook.value);
+  updateQtyInCart(bookid,qty);
+  console.log("update "+bookid+": "+String(qty));
 }
 
 function checkSubmit()

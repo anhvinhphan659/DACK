@@ -1,0 +1,38 @@
+<h1>NoName</h1>
+<p>Web bán truyện được ưa thích nhất</p>
+
+<h2 class="line-break">Lịch sử mua hàng</h2>
+<br />
+{{#each alls}}
+
+  <div class="container cart-card">
+    <div class="row">
+      <div class="col-9">
+        Đơn hàng
+        <span class="cart-break">{{this.iddh}}</span>
+      </div>
+      <div class="col-3"><p>Tổng tiền: {{this.total}} đồng</p></div>
+
+    </div>
+    {{#each this.listBook}}
+      <div class="row">
+        <div class="col-md-3 col-12">
+          <img src="{{this.HINHANH}}" />
+        </div>
+        <div class="col-md-6 col-6">
+
+   
+            <h3>{{this.tensach}}</h3>
+            Giá: <span>{{this.gia}}</span>
+    
+         <p style="bottom: 0;position:absolute;font-style:italic;font-size:14px;">   {{this.THOIGIAN}}</p>  
+        </div>
+
+        <div class="col-md-3 col-3 d-flex align-items-center">
+          x
+          {{this.SOLUONG}}
+        </div>
+      </div>
+    {{/each}}
+  </div>
+{{/each}}

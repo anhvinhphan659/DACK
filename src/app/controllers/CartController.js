@@ -37,6 +37,10 @@ class CartController {
 
             const carts = await CartService.findCurrentCartByUser(req.user.MAKH);
 
+            if (!req.session.cart) {
+                console.log("Initialize cart");
+                req.session.cart = { listBook: [] };
+            }
             var cart = carts[0];
             const staticCart = req.session.cart.listBook;
             var iddh = 0;
@@ -204,17 +208,69 @@ class CartController {
                 }
 
             } catch (err) {
-                next(err);
+
+                res.render("cart/payCart", { paymentResult: "Lỗi thanh toán", caution: "Có lỗi trong quá trình thanh toán mong quý khách thông cảm!" });
             }
         }
     }
 
     //[GET] /shopping-cart/history
     async getHistory(req, res, next) {
+        if (res.user) {
+            const allCarts = await CartService.getAllCartByUser(req.user.MAKH);
+            const allCart = allCarts[0];
+            var cart = [];
+            for (let i = 0; i < allCart.length; i++) {
+                const current = allCart[i];
+                if (cart.length > 0) {
+                    const index = cart.find((o) => o.iddh == current.iddathang);
+                    if (index >= 0) {
 
-        const allCart = await CartService.getAllCartByUser(req.user.id);
-        console.log(allCart[0]);
-        res.send(allCart[0]);
+                        cart[index].listBook.push({
+                            masach: current.masach,
+                            SOLUONG: current.SOLUONG,
+                            tensach: current.tensach,
+                            gia: current.gia,
+                            HINHANH: current.HINHANH,
+                            THOIGIAN: current.THOIGIAN,
+                        });
+                        cart[index].total += current.gia * current.SOLUONG;
+                    } else {
+                        cart.push({
+                            iddh: current.iddathang,
+                            listBook: [{
+                                masach: current.masach,
+                                SOLUONG: current.SOLUONG,
+                                tensach: current.tensach,
+                                gia: current.gia,
+                                HINHANH: current.HINHANH,
+                                THOIGIAN: current.THOIGIAN,
+                            }],
+                            total: current.gia * current.SOLUONG,
+                        });
+                    }
+                } else {
+                    cart.push({
+                        iddh: current.iddathang,
+                        listBook: [{
+                            masach: current.masach,
+                            SOLUONG: current.SOLUONG,
+                            tensach: current.tensach,
+                            gia: current.gia,
+                            HINHANH: current.HINHANH,
+                            THOIGIAN: current.THOIGIAN,
+                        }],
+                        total: current.gia * current.SOLUONG,
+                    });
+                }
+
+            }
+            console.log(cart[0]);
+
+            res.render('cart/historyCart', { alls: cart });
+        } else {
+            res.redirect(404);
+        }
     }
 
 

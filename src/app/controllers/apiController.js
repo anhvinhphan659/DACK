@@ -45,5 +45,18 @@ class ApiController {
         res.status(200).send("Done");
     }
 
+    //[POST] /api/update/dathang/:bookid/:qty
+    async updateInCart(req, res, next) {
+        if (req.user) {
+            const userID = req.user.MAKH;
+            const bookid = req.params.bookid;
+            const qty = req.params.qty;
+            await CartService.updateQtyBookInCart(userID, bookid, qty);
+
+        }
+        res.send("update in cart");
+
+    }
+
 }
 module.exports = new ApiController;
