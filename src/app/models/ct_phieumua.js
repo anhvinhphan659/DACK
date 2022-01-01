@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('ct_phieumua', {
     MAPM: {
-      type: DataTypes.STRING(5),
+      type: DataTypes.STRING(20),
       allowNull: false,
       primaryKey: true,
       references: {

@@ -17,14 +17,6 @@ module.exports = function(sequelize, DataTypes) {
                 model: 'khachhang',
                 key: 'MAKH'
             }
-        },
-        MANV: {
-            type: DataTypes.STRING(6),
-            allowNull: true,
-            references: {
-                model: 'nhanvien',
-                key: 'MANV'
-            }
         }
     }, {
         sequelize,
@@ -43,13 +35,6 @@ module.exports = function(sequelize, DataTypes) {
                 using: "BTREE",
                 fields: [
                     { name: "MAKH" },
-                ]
-            },
-            {
-                name: "FK_PMUA_NHANVIEN",
-                using: "BTREE",
-                fields: [
-                    { name: "MANV" },
                 ]
             },
         ]
