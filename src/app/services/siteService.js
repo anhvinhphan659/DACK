@@ -1,8 +1,8 @@
 const {
-  models
+  models, sequelize
 } = require("../../config/db")
 const {
-  Op
+  Op, where
 } = require("sequelize");
 
 //Tất cả sách
@@ -31,7 +31,7 @@ exports.findByType = (type) => {
 }
 
 //Lấy sách theo thể loại 
-exports.findByCategory = (category) => {
+exports.findByCategory = async(category, sort) => {
   return models.sach.findAll({
     include: [{
       model: models.theloaicuasach,
@@ -52,13 +52,65 @@ exports.findByCategory = (category) => {
 
 
 //Lấy sách theo tên
-exports.findByTitle = (title) => {
+exports.findByTitle = async(title,sort) => {
+  if (sort == "1") {
+    sort = "createdAt";
+    return models.sach.findAll({
+      where: {
+        tensach: {
+          [Op.like]: '%' + title + '%',
+        },
+      },
+      order: [[sort, "DESC"]],
+      raw: true,
+    });
+  } else if (sort == "2") {
+    sort = "gia";
+    return models.sach.findAll({
+      where: {
+        tensach: {
+          [Op.like]: '%' + title + '%',
+        },
+      },
+      order: [[sort, "DESC"]],
+      raw: true,
+    });
+  } else if (sort == "3") {
+    sort = "gia";
+    return models.sach.findAll({
+      where: {
+        tensach: {
+          [Op.like]: '%' + title + '%',
+        },
+      },
+      order: [[sort, "ASC"]],
+      raw: true,
+    });
+  } else if (sort == "4") {
+    var h = await sequelize.query(
+      "select sum(`ct_phieumua`.`SL`) as `hot`,`sach`.`masach`," +
+        "`sach`.`tensach`, `sach`.`tacgia`, `sach`.`MOTA`, `sach`.`HINHANH`," +
+        "`sach`.`manxb`, `sach`.`ngayXB`, `sach`.`gia`, `sach`.`SL`," +
+        "`sach`.`createdAt`, `sach`.`updatedAt`, `sach`.`deletedAt`, `IDHINHANH`, LEFT(sach.masach,2)" +
+        "from `sach` LEFT JOIN `ct_phieumua` ON `sach`.`masach` = `ct_phieumua`.`MASACH`" +
+        "where `sach`.`deletedAt` IS NULL and `sach`.`tensach` LIKE '%" +
+        title +
+        "%'" +
+        "group by `sach`.`masach`" +
+        "order by `hot` DESC"
+    );
+    return h[0];
+  } else {
+    sort = "tensach";
+  }
   return models.sach.findAll({
     where: {
-      tensach: {
+        tensach: {
         [Op.like]: '%' + title + '%',
-      }
-    }
+      },
+    },
+    order: [[sort, "ASC"]],
+    raw: true,
   });
 }
 
