@@ -47,6 +47,7 @@
           <input type="hidden" name="bookIMG" value="{{book.HINHANH}}">
           <input type="hidden" name="bookName" value="{{book.tensach}}">
           <input type="hidden" name="bookPrice" value="{{book.gia}}">
+          <input type="hidden" name="bookQty" value="1" id="qtybook">
           <button type="button" name="add-to-cart" class="btn btn-primary"  id="add-to-cart">Thêm vào giỏ hàng</button>
           <button type="button" class="btn btn-warning">Đặt ngay</button>
           
@@ -259,6 +260,11 @@ function generatePaginateComment(ttPage,crPage)
 function updateQuantity(operator)
 {
   var qty=document.getElementById("quantity");
+  if(parseInt(qty)<=0)
+  {
+    qty.value=0;
+    return;
+  }
   
   if(operator=="+")
   {
@@ -268,6 +274,7 @@ function updateQuantity(operator)
   {
     qty.value=parseInt(qty.value)-1;
   }
+  document.getElementById("qtybook").value=qty.value;
 }
 
   var bookid = '{{book.masach}}'
@@ -345,7 +352,8 @@ function updateQuantity(operator)
   cartButton.onclick= function(e){
     if({{book.SL}}!=0)
     {
-      if(parseInt($('#quantity')[0].value)>={{book.SL}})
+      const qty=parseInt($('#quantity')[0].value);
+      if(qty>={{book.SL}}||qty<=0)
       {
         $('#messageModal').html("Số lượng muốn đặt không hợp lệ") ;     
         oosModal.modal('show');
