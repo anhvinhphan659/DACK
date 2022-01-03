@@ -216,7 +216,7 @@ class CartController {
 
     //[GET] /shopping-cart/history
     async getHistory(req, res, next) {
-        if (res.user) {
+        if (req.user) {
             const allCarts = await CartService.getAllCartByUser(req.user.MAKH);
             const allCart = allCarts[0];
             var cart = [];

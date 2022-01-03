@@ -28,15 +28,15 @@
         <div style="width: 150px;margin-bottom:5px">
           <div class="input-group">
             <span class="input-group-btn">
-              <button type="button" class="btn btn-warning" data-type="minus" data-field="">
+              <button type="button" class="btn btn-warning" data-type="minus" data-field="" onclick="updateQuantity('-')">
                 <span>-</span>
               </button>
             </span>
             <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="0"
               max="100"  />
             <span>
-              <button type="button" class="btn btn-warning" data-type="plus" data-field="">
-                <span class="glyphicon glyphicon-plus">+</span>
+              <button type="button" class="btn btn-warning" data-type="plus" data-field="" onclick="updateQuantity('+')">
+                <span class="glyphicon glyphicon-plus" >+</span>
               </button>
             </span>
           </div>
@@ -174,7 +174,7 @@
               {{#if user}}
                 <form>
                 	<h3 class="pull-left">New Comment : {{user.HOTEN}}</h3>
-                	<button type="submit" id="submit-comment" class="btn btn-normal pull-right">Submit</button>
+                	<button type="submit" id="submit-comment" class="btn btn-success pull-right">Submit</button>
                     <fieldset>
                         <div class="row">
                             <div class="col-sm-3 col-lg-2 hidden-xs">
@@ -256,7 +256,19 @@ function generatePaginateComment(ttPage,crPage)
 </script>
 
 <script>
-
+function updateQuantity(operator)
+{
+  var qty=document.getElementById("quantity");
+  
+  if(operator=="+")
+  {
+    qty.value=parseInt(qty.value)+1;
+  }
+  if(operator=="-")
+  {
+    qty.value=parseInt(qty.value)-1;
+  }
+}
 
   var bookid = '{{book.masach}}'
   $('#submit-comment').on('click', function(e) {
