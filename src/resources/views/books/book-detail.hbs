@@ -33,7 +33,7 @@
               </button>
             </span>
             <input type="text" id="quantity" name="quantity" class="form-control input-number" value="1" min="0"
-              max="100"  />
+              max="100" readonly />
             <span>
               <button type="button" class="btn btn-warning" data-type="plus" data-field="" onclick="updateQuantity('+')">
                 <span class="glyphicon glyphicon-plus" >+</span>
@@ -260,7 +260,7 @@ function generatePaginateComment(ttPage,crPage)
 function updateQuantity(operator)
 {
   var qty=document.getElementById("quantity");
-  if(parseInt(qty)<=0)
+  if(parseInt(qty.value)<0)
   {
     qty.value=0;
     return;
@@ -353,7 +353,7 @@ function updateQuantity(operator)
     if({{book.SL}}!=0)
     {
       const qty=parseInt($('#quantity')[0].value);
-      if(qty>={{book.SL}}||qty<=0)
+      if(qty>{{book.SL}}||qty<=0)
       {
         $('#messageModal').html("Số lượng muốn đặt không hợp lệ") ;     
         oosModal.modal('show');
