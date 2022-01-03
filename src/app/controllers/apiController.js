@@ -47,14 +47,22 @@ class ApiController {
 
     //[POST] /api/update/dathang/:bookid/:qty
     async updateInCart(req, res, next) {
+
+        const bookid = req.params.bookid;
+        const qty = req.params.qty;
         if (req.user) {
             const userID = req.user.MAKH;
-            const bookid = req.params.bookid;
-            const qty = req.params.qty;
-            await CartService.updateQtyBookInCart(userID, bookid, qty);
+            return await CartService.updateQtyBookInCart(userID, bookid, qty);
 
+        } else {
+
+            console.log(req.session.cart);
+            var cart = req.session.cart;
+            const index = cart.listbook.findIndex((o) => o.masach == bookid);
+            cart.listbook[index].SOLUONG = qty;
+            res.send("update in cart");
         }
-        res.send("update in cart");
+
 
     }
 

@@ -83,9 +83,10 @@ class CartController {
                 const addbookIMG = req.body.bookIMG;
                 const addbookName = req.body.bookName;
                 const addbookPrice = req.body.bookPrice;
+                const addbookQty = req.body.bookQty;
                 const addedBook = {
                     masach: addbookID,
-                    SOLUONG: 1,
+                    SOLUONG: addbookQty,
                     HINHANH: addbookIMG,
                     tensach: addbookName,
                     gia: addbookPrice,
