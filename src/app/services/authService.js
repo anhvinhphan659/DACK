@@ -9,7 +9,7 @@ exports.findUser = (username) => {
   return models.khachhang.findOne({ where: { USER: username } });
 };
 exports.genIDKH = async () => {
-  var khachs = await models.khachhang.findAll({});
+  var khachs = await models.khachhang.findAll({paranoid: false,});
   var i = 1;
   var check = true;
   var str;
@@ -40,6 +40,7 @@ exports.checkUSER = async (id) => {
       where: {
         USER: id,
       },
+      paranoid: false,
     })
     .then((count) => {
       console.log(count);

@@ -68,6 +68,7 @@ class UserController{
                     }
                     if(titile == false){
                         message = 'change success'
+                        res.redirect('/logout')
                     }
                     res.render('user/changepass', {message})
                 }else{
