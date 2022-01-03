@@ -134,7 +134,7 @@ class BookController {
     //[GET]: /books/:masach/comment
     async showcmt (req, res, next) {
         try {
-            var cmt = await bookService.getcomment(req)
+            var cmt = await bookService.getcomment(req);
             res.status(200).json({cmt : cmt[0]})
         } catch (error) {
             next(error);
