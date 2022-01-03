@@ -216,7 +216,7 @@ class CartController {
 
     //[GET] /shopping-cart/history
     async getHistory(req, res, next) {
-        if (res.user) {
+        if (req.user) {
             const allCarts = await CartService.getAllCartByUser(req.user.MAKH);
             const allCart = allCarts[0];
             var cart = [];
@@ -225,7 +225,6 @@ class CartController {
                 if (cart.length > 0) {
                     const index = cart.find((o) => o.iddh == current.iddathang);
                     if (index >= 0) {
-
                         cart[index].listBook.push({
                             masach: current.masach,
                             SOLUONG: current.SOLUONG,
@@ -266,7 +265,6 @@ class CartController {
 
             }
             console.log(cart[0]);
-
             res.render('cart/historyCart', { alls: cart });
         } else {
             res.redirect(404);
