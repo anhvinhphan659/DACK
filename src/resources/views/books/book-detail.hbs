@@ -216,6 +216,18 @@
             
             </div>
         </div>
+        <div class="d-flex justify-content-center" >
+      <nav aria-label="Page navigation example">
+        <ul class="pagination" id="pagination">
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          {{!-- <li class="page-item"><a class="page-link" href="#" value="-1">Previous</a></li>
+          
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item"><a class="page-link" href="#">Next</a></li> --}}
+        </ul>
+      </nav>
+    </div>
     </div>
   </section>
   
@@ -223,12 +235,33 @@
 </div>
 
 <script>
+function generatePaginateComment(ttPage,crPage)  
+{
+  var pagi= document.getElementById("pagination");
+  pagi.innerHTML="\n";
+  for (let i=0;i<ttPage;i++)
+  {
+    var className="page-item";
+    if(i+1==crPage)
+    {
+      className+=" active";
+    }
+    var liDiv=`<li class="${className}"><a class="page-link" href="#comment-show" onclick="onPageChanged(${i+1})">${i+1}</a></li>\n`;
+    pagi.innerHTML+=liDiv;
+
+  }
+}  
+
+  
+</script>
+
+<script>
 
 
   var bookid = '{{book.masach}}'
   $('#submit-comment').on('click', function(e) {
     e.preventDefault();
-    text = $('#message').val()
+    var text = $('#message').val()
     var user = '{{user.USER}}'
     console.log(bookid + ": " + user)
 
@@ -250,14 +283,31 @@
       alert('Hãy viết comment')
     }
   })
+ 
+  const MAX_CMT_ON_PAGE=5;
+  var currentPage=2;
+  function onPageChanged(newPage)
+  {
+    currentPage=newPage;
+    loadFunction();
+  }
   function loadFunction(){
+    
     $.getJSON(`${bookid}/comment`, function(data) {
       $('h3.quantity-cmt').empty();
       $('h3.quantity-cmt').append(data.cmt.length+' Comments')
       let html = ''
-      for (const key of data.cmt){
+      const l=data.cmt.length;
+      const totalPage=Math.ceil(l/MAX_CMT_ON_PAGE);
+      generatePaginateComment(totalPage,currentPage);
+      const begin=(currentPage-1)*MAX_CMT_ON_PAGE;
+      const end=((currentPage)*MAX_CMT_ON_PAGE-1)>(l-1)?(l-1):((currentPage)*MAX_CMT_ON_PAGE-1);
+      console.log(begin);
+      console.log(end);
+      for (let i=begin;i<=end;i++){
+        const key=data.cmt[i];
         html+= `<div class="media">
-                    <a class="pull-left" href="#"><img class="media-object" src="${key.HINHANH}" alt=""></a>
+                    <a class="pull-left" href="#"><img class="media-object" src="${key.HINHANH}" alt="${key.HOTEN}"></a>
                     <div class="media-body">
                         <h4 class="media-heading">${key.HOTEN}</h4>
                         <p>${key.NOIDUNG}</p>

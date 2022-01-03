@@ -87,5 +87,5 @@ exports.getcomment = async(req) => {
     return await sequelize.query("SELECT `binhluan`.`USER`, `binhluan`.`MASACH`, `binhluan`.`THOIGIAN`, `binhluan`.`NOIDUNG`, `USER_khachhang`.`MAKH`, `USER_khachhang`.`USER` , `USER_khachhang`.`HOTEN` , " +
         " `USER_khachhang`.`HINHANH`,  `USER_khachhang`.`IDHINHANH`  " +
         "  FROM `binhluan` AS `binhluan` LEFT OUTER JOIN `khachhang` AS `USER_khachhang` ON `binhluan`.`USER` = `USER_khachhang`.`USER` AND (`USER_khachhang`.`deletedAt` IS NULL) WHERE `binhluan`.`MASACH` =  '" + req.params.id + "'" +
-        " ORDER BY `binhluan`.`THOIGIAN` ASC")
+        " ORDER BY `binhluan`.`THOIGIAN` DESC")
 };
