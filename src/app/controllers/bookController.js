@@ -13,21 +13,23 @@ class BookController {
     async showAll(req, res, next) {
         req.session.returnTo = req.originalUrl;
         var page = parseInt(req.query.page);
+        var sort = req.query.sort|| '';
         if (isNaN(page)) {
             page = 1;
         }
         const start = (page - 1) * TITLE_PER_PAGE;
         const end = start + TITLE_PER_PAGE;
-        const books = await bookService.AllBooks();
+        const books = await bookService.AllBooks(sort);
 
 
-        const booksArray = multipleSequelizeToObject(books);
+        const booksArray = books;
         const totalPage = parseInt(booksArray.length % TITLE_PER_PAGE) == 0 ?  parseInt(booksArray.length / TITLE_PER_PAGE) : parseInt(booksArray.length / TITLE_PER_PAGE) + 1;
         res.render('books/all-books', {
             title: "Book Selling",
             books: booksArray.slice(start, end),
             totalPage: totalPage,
-            currentPage: page
+            currentPage: page,
+            sort
         });
 
         return;
@@ -37,7 +39,7 @@ class BookController {
     async showType(req, res, next) {
         req.session.returnTo = req.originalUrl;
         var bookType = req.params.id;
-        console.log(bookType);
+        var sort = req.query.sort|| '';
 
         //cut string after query page
         if (String(bookType).indexOf("&&") >= 0) {
@@ -51,7 +53,7 @@ class BookController {
                 type = 'TT';
             }
         }
-        const books = await bookService.findByType(type);
+        const books = await bookService.findByType(type,sort);
 
         var page = parseInt(req.query.page);
         // console.log(page);
@@ -60,7 +62,7 @@ class BookController {
         }
         const start = (page - 1) * TITLE_PER_PAGE;
         const end = start + TITLE_PER_PAGE;
-        const booksArray = multipleSequelizeToObject(books);
+        const booksArray = books;
 
         // console.log(booksArray);
 
@@ -69,7 +71,8 @@ class BookController {
             books: booksArray.slice(start, end),
             totalPage: parseInt(booksArray.length / TITLE_PER_PAGE) + 1,
             currentPage: page,
-            Type: bookType
+            Type: bookType,
+            sort
         });
         return;
     }
@@ -78,9 +81,10 @@ class BookController {
     async showCategory(req, res, next) {
         req.session.returnTo = req.originalUrl;
         var bookCategory = req.params.id;
+        var sort = req.query.sort|| '';
+        console.log(sort)
 
-
-        const books = await bookService.findByCategory(bookCategory);
+        const books = await bookService.findByCategory(bookCategory,sort);
  
         var page = parseInt(req.query.page);
         if (isNaN(page)) {
@@ -88,15 +92,16 @@ class BookController {
         }
         const start = (page - 1) * TITLE_PER_PAGE;
         const end = start + TITLE_PER_PAGE;
-        const booksArray = multipleSequelizeToObject(books);
+        const booksArray = books;
         // console.log(booksArray);
-
+        //res.send(books)
         res.render('books/books-category', {
             title: "Book Selling",
             books: booksArray.slice(start, end),
             totalPage: parseInt(booksArray.length / TITLE_PER_PAGE) + 1,
             currentPage: page,
-            category: bookCategory
+            category: bookCategory,
+            sort
         });
         return;
     }

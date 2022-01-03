@@ -31,6 +31,7 @@ class SiteController {
     async search(req, res, next) {
         req.session.returnTo = req.originalUrl;
         const title = req.query.title;
+        var sort = req.query.sort|| '';
         console.log(req.query.title);
         var page = parseInt(req.query.page);
         if (isNaN(page)) {
@@ -39,10 +40,10 @@ class SiteController {
 
         const start = (page - 1) * TITLE_PER_PAGE;
         const end = start + TITLE_PER_PAGE;
-        const books = await siteservice.findByTitle(title);
+        const books = await siteservice.findByTitle(title,sort);
 
 
-        const booksArray = multipleSequelizeToObject(books);
+        const booksArray = books;
         // console.log(booksArray.slice(0, 5));
         // booksArray = booksArray.splice(0, skip);
         const totalPage = parseInt(booksArray.length % TITLE_PER_PAGE) == 0 ? parseInt(booksArray.length / TITLE_PER_PAGE) : parseInt(booksArray.length / TITLE_PER_PAGE) + 1;
@@ -53,7 +54,8 @@ class SiteController {
             books: booksArray.slice(start, end),
             searchTitle: title,
             totalPage: totalPage,
-            currentPage: page
+            currentPage: page,
+            sort
         })
 
         // res.send(books)

@@ -1,86 +1,217 @@
 const { models, sequelize } = require("../../config/db");
 const { Op, where } = require("sequelize");
 
-
-exports.AllBooks = () => {
-    return models.sach.findAll();
+exports.AllBooks = async (sort) => {
+  //return models.sach.findAll();
+  if (sort == "1") {
+    sort = "createdAt";
+    return models.sach.findAll({
+      order: [[sort, "DESC"]],
+      raw: true,
+    });
+  } else if (sort == "2") {
+    sort = "gia";
+    return models.sach.findAll({
+      order: [[sort, "DESC"]],
+      raw: true,
+    });
+  } else if (sort == "3") {
+    sort = "gia";
+    return models.sach.findAll({
+      order: [[sort, "ASC"]],
+      raw: true,
+    });
+  } else if (sort == "4") {
+    var h = await sequelize.query(
+      "select sum(`ct_phieumua`.`SL`) as `hot`,`sach`.`masach`," +
+        "`sach`.`tensach`, `sach`.`tacgia`, `sach`.`MOTA`, `sach`.`HINHANH`," +
+        "`sach`.`manxb`, `sach`.`ngayXB`, `sach`.`gia`, `sach`.`SL`, " +
+        "`sach`.`createdAt`, `sach`.`updatedAt`, `sach`.`deletedAt`, `IDHINHANH` " +
+        "from `sach` LEFT JOIN `ct_phieumua` ON `sach`.`masach` = `ct_phieumua`.`MASACH` " +
+        "where `sach`.`deletedAt` IS NULL " +
+        "group by `sach`.`masach`" +
+        "order by `hot` DESC"
+    );
+    return h[0];
+  } else {
+    sort = "tensach";
+  }
+  return models.sach.findAll({
+    order: [[sort, "ASC"]],
+    raw: true,
+  });
 };
 
 //Lấy theo masach - chi tiết sách
 exports.findById = (id) => {
-    return models.sach.findOne({
-        where: {
-            masach: id,
-        },
-    });
+  return models.sach.findOne({
+    where: {
+      masach: id,
+    },
+  });
 };
 
 //Lấy loại sách thao masach (Truyện chữ - truyện tranh)
-exports.findByType = (type) => {
+exports.findByType = async (type, sort) => {
+  if (sort == "1") {
+    sort = "createdAt";
     return models.sach.findAll({
-        where: {
-            masach: {
-                [Op.like]: type + "%",
-            },
+      where: {
+        masach: {
+          [Op.like]: type + "%",
         },
+      },
+      order: [[sort, "DESC"]],
+      raw: true,
     });
+  } else if (sort == "2") {
+    sort = "gia";
+    return models.sach.findAll({
+      where: {
+        masach: {
+          [Op.like]: type + "%",
+        },
+      },
+      order: [[sort, "DESC"]],
+      raw: true,
+    });
+  } else if (sort == "3") {
+    sort = "gia";
+    return models.sach.findAll({
+      where: {
+        masach: {
+          [Op.like]: type + "%",
+        },
+      },
+      order: [[sort, "ASC"]],
+      raw: true,
+    });
+  } else if (sort == "4") {
+    var h = await sequelize.query(
+      "select sum(`ct_phieumua`.`SL`) as `hot`,`sach`.`masach`," +
+        "`sach`.`tensach`, `sach`.`tacgia`, `sach`.`MOTA`, `sach`.`HINHANH`," +
+        "`sach`.`manxb`, `sach`.`ngayXB`, `sach`.`gia`, `sach`.`SL`," +
+        "`sach`.`createdAt`, `sach`.`updatedAt`, `sach`.`deletedAt`, `IDHINHANH`, LEFT(sach.masach,2)" +
+        "from `sach` LEFT JOIN `ct_phieumua` ON `sach`.`masach` = `ct_phieumua`.`MASACH`" +
+        "where `sach`.`deletedAt` IS NULL and LEFT(sach.masach,2) = '" +
+        type +
+        "'" +
+        "group by `sach`.`masach`" +
+        "order by `hot` DESC"
+    );
+    return h[0];
+  } else {
+    sort = "tensach";
+  }
+  return models.sach.findAll({
+    where: {
+      masach: {
+        [Op.like]: type + "%",
+      },
+    },
+    order: [[sort, "ASC"]],
+    raw: true,
+  });
 };
 
 //Lấy sách theo thể loại
-exports.findByCategory = (category) => {
-    return models.sach.findAll({
-        include: [{
-            model: models.theloaicuasach,
-            as: "theloaicuasaches",
-            include: [{
-                model: models.theloai,
-                as: "maTL_theloai",
-                where: {
-                    tenTL: {
-                        [Op.like]: "%" + category + "%",
-                    },
-                },
-            }, ],
-            required: true,
-        }, ],
-    });
+exports.findByCategory = async(category, sort) => {
+  if (sort == "1") {
+    sort = "createdAt";
+    console.log(sort)
+    var h = await sequelize.query(
+        "select sum(`ct_phieumua`.`SL`) as `hot`,`sach`.`masach`,"+
+        "`sach`.`tensach`, `sach`.`tacgia`, `sach`.`MOTA`, `sach`.`HINHANH`,"+
+        "`sach`.`manxb`, `sach`.`ngayXB`, `sach`.`gia`, `sach`.`SL`,"+
+        "`sach`.`createdAt`, `sach`.`updatedAt`, `sach`.`deletedAt`, `IDHINHANH`"+
+        "from  theloaicuasach tlcs,theloai tl , `sach` LEFT JOIN `ct_phieumua` ON `sach`.`masach` = `ct_phieumua`.`MASACH`"+
+        "where `sach`.`deletedAt` IS NULL and tlcs.masach = sach.masach and tlcs.maTL = tl.maTL and tl.tenTL = '"+category+"'"+
+        "group by `sach`.`masach`"+
+        "order by `"+ sort +"` DESC"
+    );
+    return h[0];
+  } else if (sort == "2") {
+    sort = "gia";
+    console.log(sort)
+    var h = await sequelize.query(
+        "select sum(`ct_phieumua`.`SL`) as `hot`,`sach`.`masach`,"+
+        "`sach`.`tensach`, `sach`.`tacgia`, `sach`.`MOTA`, `sach`.`HINHANH`,"+
+        "`sach`.`manxb`, `sach`.`ngayXB`, `sach`.`gia`, `sach`.`SL`,"+
+        "`sach`.`createdAt`, `sach`.`updatedAt`, `sach`.`deletedAt`, `IDHINHANH`"+
+        "from  theloaicuasach tlcs,theloai tl , `sach` LEFT JOIN `ct_phieumua` ON `sach`.`masach` = `ct_phieumua`.`MASACH`"+
+        "where `sach`.`deletedAt` IS NULL and tlcs.masach = sach.masach and tlcs.maTL = tl.maTL and tl.tenTL = '"+category+"'"+
+        "group by `sach`.`masach`"+
+        "order by `"+ sort +"` DESC"
+    );
+    return h[0];
+  } else if (sort == "3") {
+    sort = "gia";
+    console.log(sort)
+    var h = await sequelize.query(
+        "select sum(`ct_phieumua`.`SL`) as `hot`,`sach`.`masach`,"+
+        "`sach`.`tensach`, `sach`.`tacgia`, `sach`.`MOTA`, `sach`.`HINHANH`,"+
+        "`sach`.`manxb`, `sach`.`ngayXB`, `sach`.`gia`, `sach`.`SL`,"+
+        "`sach`.`createdAt`, `sach`.`updatedAt`, `sach`.`deletedAt`, `IDHINHANH`"+
+        "from  theloaicuasach tlcs,theloai tl , `sach` LEFT JOIN `ct_phieumua` ON `sach`.`masach` = `ct_phieumua`.`MASACH`"+
+        "where `sach`.`deletedAt` IS NULL and tlcs.masach = sach.masach and tlcs.maTL = tl.maTL and tl.tenTL = '"+category+"'"+
+        "group by `sach`.`masach`"+
+        "order by `"+ sort +"` ASC"
+    );
+    return h[0];
+  } else if (sort == "4") {
+    console.log(sort)
+    var h = await sequelize.query(
+        "select sum(`ct_phieumua`.`SL`) as `hot`,`sach`.`masach`,"+
+        "`sach`.`tensach`, `sach`.`tacgia`, `sach`.`MOTA`, `sach`.`HINHANH`,"+
+        "`sach`.`manxb`, `sach`.`ngayXB`, `sach`.`gia`, `sach`.`SL`,"+
+        "`sach`.`createdAt`, `sach`.`updatedAt`, `sach`.`deletedAt`, `IDHINHANH`"+
+        "from  theloaicuasach tlcs,theloai tl , `sach` LEFT JOIN `ct_phieumua` ON `sach`.`masach` = `ct_phieumua`.`MASACH`"+
+        "where `sach`.`deletedAt` IS NULL and tlcs.masach = sach.masach and tlcs.maTL = tl.maTL and tl.tenTL = '"+category+"'"+
+        "group by `sach`.`masach`"+
+        "order by `hot` DESC"
+    );
+    return h[0];
+  } else {
+    sort = "tensach";
+    console.log(sort)
+  }
+    var h = await sequelize.query(
+        "select sum(`ct_phieumua`.`SL`) as `hot`,`sach`.`masach`,"+
+        "`sach`.`tensach`, `sach`.`tacgia`, `sach`.`MOTA`, `sach`.`HINHANH`,"+
+        "`sach`.`manxb`, `sach`.`ngayXB`, `sach`.`gia`, `sach`.`SL`,"+
+        "`sach`.`createdAt`, `sach`.`updatedAt`, `sach`.`deletedAt`, `IDHINHANH`"+
+        "from  theloaicuasach tlcs,theloai tl , `sach` LEFT JOIN `ct_phieumua` ON `sach`.`masach` = `ct_phieumua`.`MASACH`"+
+        "where `sach`.`deletedAt` IS NULL and tlcs.masach = sach.masach and tlcs.maTL = tl.maTL and tl.tenTL = '"+category+"'"+
+        "group by `sach`.`masach`"+
+        "order by `"+ sort +"` ASC"
+    );
+    return h[0];
 };
 
-//Lấy sách theo tên
-exports.findByTitle = (title) => {
 
-    return models.sach.findAll({
-        where: {
-            tensach: {
-                [Op.like]: "%" + title + "%",
-            },
-        },
-    });
+
+exports.updateQtyBook = async (bookid, qty) => {
+  console.log(bookid);
+  console.log(qty);
+  const book = await models.sach.findOne({
+    masach: bookid,
+  });
+  console.log(book);
+  if (book) {
+    const newQty = book.SL - qty;
+    console.log(newQty);
+    models.sach.update({ SL: newQty }, { where: { masach: bookid } });
+  }
 };
-
-exports.updateQtyBook = async(bookid, qty) => {
-    console.log(bookid);
-    console.log(qty);
-    const book = await models.sach.findOne({
-        masach: bookid,
-    });
-    console.log(book);
-    if (book) {
-        const newQty = book.SL - qty;
-        console.log(newQty);
-        models.sach.update({ SL: newQty }, { where: { masach: bookid } });
-    }
-
-}
 
 //
-exports.writecomment = async(req) => {
-    return await models.binhluan.create({
-        USER: req.body.USER,
-        MASACH: req.params.id,
-        NOIDUNG: req.body.NOIDUNG,
-        THOIGIAN: new Date(Date.now()).toISOString(),
-    });
+exports.writecomment = async (req) => {
+  return await models.binhluan.create({
+    USER: req.body.USER,
+    MASACH: req.params.id,
+    NOIDUNG: req.body.NOIDUNG,
+    THOIGIAN: new Date(Date.now()).toISOString(),
+  });
 };
 //lấy bình luận của 1 sách
 exports.getcomment = async(req) => {

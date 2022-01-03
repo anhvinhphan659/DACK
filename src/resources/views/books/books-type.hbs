@@ -4,19 +4,20 @@
   <div class="book-information">
     <h2 style="color: orange;">Truyện tranh</h2>
     <div class="row">
-      <div class="col-md-2">
-        <p>Sắp xếp theo</p>
+      <div class="col-2">
+        <p>Sắp xếp theo :</p>
       </div>
-      <div class="col-md-10">
-        <select class="form-select" style="width: 250px;">
-          <option selected>Select--</option>
-          <option value="1">Thời gian</option>
-          <option value="2">Lượt mua</option>
-          <option value="3">Giá tiền</option>
+      <div class="col-10">
+        <a class=" btn mr-1 btn-primary" href="?sort=5">Theo A-Z</a>
+        <a class=" btn mr-1 btn-primary" href="?sort=4"> Bán chạy  </a>
+        <a class=" btn mr-1 btn-primary" href="?sort=1"> Mới nhất </a>
+        <select class="float-left mr-1 form-select" id= "sort" style="width: 150px;">
+          <option value="none" selected disabled hidden> Giá </option>
+          <option value="2">Giá giảm</option>
+          <option value="3">Giá tăng </option>
         </select>
       </div>
     </div>
-
     <div class="mt-4">
       <div class="row">
         {{#each books}}
@@ -58,7 +59,21 @@
     </div>
 
   </div>
-</div>
+
 <script>
-  generatePagination({{totalPage}},{{currentPage}},"/books/type/{{Type}}"+"?page=");
+  var val = 'none'
+  if( '{{sort}}' == '3' || '{{sort}}' == '2' ){
+    val = '{{sort}}'
+  }
+  $('#sort').val(val)
+  var page ='{{sort}}' ;
+
+  generatePagination({{totalPage}},{{currentPage}},"/books/type/{{Type}}"+"?sort="+ page +"&&page=");
+  $('#sort').on('change', function(e) {
+    page = e.target.value;
+    location.replace(`/books/type/{{Type}}?sort=${page}`)
+  })
+
+
+
 </script>
