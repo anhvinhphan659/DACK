@@ -56,10 +56,13 @@ class ApiController {
 
         } else {
 
-            console.log(req.session.cart);
-            var cart = req.session.cart;
-            const index = cart.listbook.findIndex((o) => o.masach == bookid);
-            cart.listbook[index].SOLUONG = qty;
+            console.log(req.session.cart.listBook);
+            var currentCart = req.session.cart;
+            // console.log(Array.isArray(cart.listbook));
+            console.log(currentCart.listBook);
+            const index = currentCart.listBook.findIndex((o) => o.masach == bookid);
+            currentCart.listBook[index].SOLUONG = qty;
+            req.session.save();
             res.send("update in cart");
         }
 

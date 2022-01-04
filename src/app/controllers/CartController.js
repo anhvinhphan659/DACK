@@ -24,7 +24,7 @@ class CartController {
             }
             console.log(req.session.cart.listBook);
 
-            res.render('books/shopping-cart', {
+            res.render('cart/shopping-cart', {
                 title: "Book Selling",
                 cartBooks: req.session.cart.listBook,
 
@@ -59,10 +59,12 @@ class CartController {
             }
 
             //empty cart before login
-            Cart.empty();
+            // Cart.empty();
+            req.session.cart = { listBook: [] };
+            req.session.save();
 
             // console.log(carts[0]);
-            res.render('books/shopping-cart', {
+            res.render('cart/shopping-cart', {
                 title: "Book Selling",
                 cartBooks: cart,
                 makh: req.user.MAKH,
@@ -96,9 +98,9 @@ class CartController {
                 console.log(req.session.cart.listBook);
                 req.session.save();
 
-                res.render('books/shopping-cart', { cartBooks: booksInCart });
+                res.render('cart/shopping-cart', { cartBooks: booksInCart });
 
-            } else {
+            } else { //login
                 try {
                     const carts = await CartService.findCurrentCartByUser(req.user.MAKH);
 
@@ -107,6 +109,7 @@ class CartController {
                     const addbookIMG = req.body.bookIMG;
                     const addbookName = req.body.bookName;
                     const addbookPrice = req.body.bookPrice;
+                    const addbookQty = req.body.bookQty;
                     var cart = carts[0];
                     console.log(cart);
                     //check if customer has current id for cart
@@ -122,7 +125,7 @@ class CartController {
                             await CartService.addNewBookToCart(currentID, addbookID, req.user.MAKH);
                             const newBook = {
                                 masach: addbookID,
-                                SOLUONG: 1,
+                                SOLUONG: addbookQty,
                                 HINHANH: addbookIMG,
                                 tensach: addbookName,
                                 gia: addbookPrice,
@@ -138,7 +141,7 @@ class CartController {
                         await CartService.addNewBookToCart(cartID, addbookID, req.user.MAKH);
                         const newBook = {
                             masach: addbookID,
-                            SOLUONG: 1,
+                            SOLUONG: addbookQty,
                             HINHANH: addbookIMG,
                             tensach: addbookName,
                             gia: addbookPrice,
@@ -147,7 +150,7 @@ class CartController {
 
                     }
                     console.log(cart);
-                    res.render('books/shopping-cart', { cartBooks: cart });
+                    res.render('cart/shopping-cart', { cartBooks: cart });
 
                 } catch (err) {
                     next(err);
