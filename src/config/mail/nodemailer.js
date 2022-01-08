@@ -17,7 +17,7 @@ exports.sendEmail= async (email, token) => {
             from: process.env.EMAIL,
             to: email,
             subject: 'Reset Password Link - NONAME',
-            html: '<p>You requested for reset password, kindly use this <a href='+  +'/reset-password?token=' + token + '">link</a> to reset your password</p>'
+            html: '<p>You requested for reset password, kindly use this <a href='+ process.env.HOST+'/reset-password?token=' + token + '">link</a> to reset your password</p>'
     
         };
  
