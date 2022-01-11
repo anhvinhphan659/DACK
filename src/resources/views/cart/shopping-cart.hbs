@@ -183,17 +183,20 @@ function removeBook(bookID,userID)
   //update total
   updateTotal();
   
-  //check is user
-  if(userID!='')
-  {//remove in database
   removeFromCart(bookID,userID);
-  }
+  //check is user
+  
 }
 
 function removeFromCart(bookID,userID)
 {
+  var userid=userID;
+  if (userid=='')
+  {
+    userid='temp';
+  }
   $.ajax({
-        url:'/api/dathang/'+userID+'/'+bookID,
+        url:'/api/dathang/'+userid+'/'+bookID,
         method:"POST",
         success:function(data)
         {

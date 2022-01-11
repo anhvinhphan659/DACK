@@ -34,8 +34,23 @@ class ApiController {
         }
         //[POST] /api/dathang/:userid/:bookid
     async removeBookInCart(req, res, next) {
-        await CartService.removeCart(req.params.bookid, req.params.userid);
-        res.status(200).send("Done");
+        if (req.user) {
+            await CartService.removeCart(req.params.bookid, req.params.userid);
+            res.status(200).send("Done");
+        }
+
+        if (req.session.cart) {
+            console.log(req.params.userid);
+            const index = req.session.cart.listBook.findIndex((o) => o.masach == req.params.bookid);
+            if (index >= 0) {
+                req.session.cart.listBook.splice(index, 1);
+                console.log(req.session.cart);
+                req.session.save();
+                res.status(200).send(req.session.cart);
+            }
+        }
+
+
     }
 
     //[POST] /api/update/dathang/:bookid/:qty
