@@ -118,7 +118,6 @@ exports.findByType = async (type, sort) => {
 exports.findByCategory = async(category, sort) => {
   if (sort == "1") {
     sort = "createdAt";
-    console.log(sort)
     var h = await sequelize.query(
         "select sum(`ct_phieumua`.`SL`) as `hot`,`sach`.`masach`,"+
         "`sach`.`tensach`, `sach`.`tacgia`, `sach`.`MOTA`, `sach`.`HINHANH`,"+
@@ -132,7 +131,6 @@ exports.findByCategory = async(category, sort) => {
     return h[0];
   } else if (sort == "2") {
     sort = "gia";
-    console.log(sort)
     var h = await sequelize.query(
         "select sum(`ct_phieumua`.`SL`) as `hot`,`sach`.`masach`,"+
         "`sach`.`tensach`, `sach`.`tacgia`, `sach`.`MOTA`, `sach`.`HINHANH`,"+
@@ -146,7 +144,7 @@ exports.findByCategory = async(category, sort) => {
     return h[0];
   } else if (sort == "3") {
     sort = "gia";
-    console.log(sort)
+    
     var h = await sequelize.query(
         "select sum(`ct_phieumua`.`SL`) as `hot`,`sach`.`masach`,"+
         "`sach`.`tensach`, `sach`.`tacgia`, `sach`.`MOTA`, `sach`.`HINHANH`,"+
@@ -159,7 +157,7 @@ exports.findByCategory = async(category, sort) => {
     );
     return h[0];
   } else if (sort == "4") {
-    console.log(sort)
+    
     var h = await sequelize.query(
         "select sum(`ct_phieumua`.`SL`) as `hot`,`sach`.`masach`,"+
         "`sach`.`tensach`, `sach`.`tacgia`, `sach`.`MOTA`, `sach`.`HINHANH`,"+
@@ -173,7 +171,7 @@ exports.findByCategory = async(category, sort) => {
     return h[0];
   } else {
     sort = "tensach";
-    console.log(sort)
+    
   }
     var h = await sequelize.query(
         "select sum(`ct_phieumua`.`SL`) as `hot`,`sach`.`masach`,"+
@@ -191,15 +189,13 @@ exports.findByCategory = async(category, sort) => {
 
 
 exports.updateQtyBook = async (bookid, qty) => {
-  console.log(bookid);
-  console.log(qty);
+
   const book = await models.sach.findOne({
     masach: bookid,
   });
-  console.log(book);
   if (book) {
     const newQty = book.SL - qty;
-    console.log(newQty);
+
     models.sach.update({ SL: newQty }, { where: { masach: bookid } });
   }
 };

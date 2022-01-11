@@ -9,11 +9,6 @@ const passport = require('./../config/auth/passport')
 const upload = require('../config/uploadIMG/multer');
 const { route } = require('./Cart');
 
-
-
-
-
-
 router.get('/search', SiteController.search)
 router.get('/', SiteController.index)
     // for auth

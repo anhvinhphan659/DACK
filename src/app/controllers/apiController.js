@@ -3,9 +3,6 @@ const CartService = require("../services/cartService");
 class ApiController {
     //[GET] /api/books/:bookid
     async getBook(req, res, next) {
-        // bookid = req.params.bookID;
-        // console.log(bookid);
-        console.log(req.params.bookID);
         var book = await BookService.findById(req.params.bookID);
         try {
             res.status(200).json({ book: book })
@@ -18,8 +15,6 @@ class ApiController {
     async getDatHang(req, res, next) {
         var cart = await CartService.findCurrentCartByUser(req.params.userid);
         try {
-            console.log("TEST API");
-            console.log(cart[0].length);
             res.status(200).json({ cart: cart })
         } catch (err) {
             next(err);
@@ -28,11 +23,9 @@ class ApiController {
 
     //[GET] /api/dathang/:userid/:bookid
     async getBookInCurrentCart(req, res, next) {
-            console.log(req.params.bookid);
-            console.log(req.params.userid);
+        
             const book = await CartService.findBookInCart(req.params.userid, req.params.bookid);
             try {
-                console.log(book);
                 res.status(200).json({ book: book });
             } catch (err) {
                 next(err);
@@ -55,11 +48,7 @@ class ApiController {
             return await CartService.updateQtyBookInCart(userID, bookid, qty);
 
         } else {
-
-            console.log(req.session.cart.listBook);
             var currentCart = req.session.cart;
-            // console.log(Array.isArray(cart.listbook));
-            console.log(currentCart.listBook);
             const index = currentCart.listBook.findIndex((o) => o.masach == bookid);
             currentCart.listBook[index].SOLUONG = qty;
             req.session.save();

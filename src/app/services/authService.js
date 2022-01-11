@@ -6,7 +6,7 @@ const randtoken = require("rand-token");
 const mailService = require("../../config/mail/nodemailer");
 
 exports.findUser = (username) => {
-  return models.khachhang.findOne({ where: { USER: username } });
+  return models.khachhang.findOne({ where: { USER: username } , raw : true});
 };
 exports.genIDKH = async () => {
   var khachs = await models.khachhang.findAll({paranoid: false,});
@@ -43,7 +43,6 @@ exports.checkUSER = async (id) => {
       paranoid: false,
     })
     .then((count) => {
-      console.log(count);
       if (count != 0) {
         return true;
       } else return false;
@@ -114,15 +113,12 @@ exports.checktoken = async (token) => {
     force: true,
     paranoid: false,
   });
-  console.log('here')
   if (!check) {
     return 0;
   }
-  console.log('here 1')
   if (check.createdAt < new Date(new Date() - 20 * 60 * 1000)) {
     return 0;
   }
-  console.log('here 3')
   return check
 };
 

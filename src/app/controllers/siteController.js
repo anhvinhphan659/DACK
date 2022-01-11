@@ -17,8 +17,6 @@ class SiteController {
             const newNovels = await siteservice.findNewBooks('TC');
             const hotComics = await siteservice.findHotBooks('TT');
             const hotNovels = await siteservice.findHotBooks('TC');
-            console.log(newComics);
-            // console.log(newComics);
             res.render('home', {
                 title: 'NoName',
                 newComics: multipleSequelizeToObject(newComics),
@@ -32,7 +30,6 @@ class SiteController {
         req.session.returnTo = req.originalUrl;
         const title = req.query.title;
         var sort = req.query.sort || '';
-        console.log(req.query.title);
         var page = parseInt(req.query.page);
         if (isNaN(page)) {
             page = 1;
@@ -44,8 +41,6 @@ class SiteController {
 
 
         const booksArray = books;
-        // console.log(booksArray.slice(0, 5));
-        // booksArray = booksArray.splice(0, skip);
         const totalPage = parseInt(booksArray.length % TITLE_PER_PAGE) == 0 ? parseInt(booksArray.length / TITLE_PER_PAGE) : parseInt(booksArray.length / TITLE_PER_PAGE) + 1;
 
 
@@ -57,8 +52,6 @@ class SiteController {
             currentPage: page,
             sort
         })
-
-        // res.send(books)
         return;
     }
 

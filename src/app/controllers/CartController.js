@@ -19,10 +19,8 @@ class CartController {
 
         if (!req.user) { //not login
             if (!req.session.cart) {
-                console.log("Initialize cart");
                 req.session.cart = { listBook: [] };
             }
-            console.log(req.session.cart.listBook);
 
             res.render('cart/shopping-cart', {
                 title: "Book Selling",
@@ -32,8 +30,7 @@ class CartController {
         } else { //login
 
             req.session.returnTo = req.originalUrl;
-            // console.log("get cart--------------------------------");
-            // console.log(req.user);
+
 
             const carts = await CartService.findCurrentCartByUser(req.user.MAKH);
 
@@ -51,7 +48,7 @@ class CartController {
             } else {
                 //generate new ID
                 iddh = CartService.generateIDDatHang(req.user.MAKH);
-                console.log(iddh);
+
             }
             for (let i = 0; i < staticCart.length; i++) {
                 CartService.addNewBookToCart(iddh, staticCart[i].masach, req.user.MAKH);
@@ -63,7 +60,6 @@ class CartController {
             req.session.cart = { listBook: [] };
             req.session.save();
 
-            // console.log(carts[0]);
             res.render('cart/shopping-cart', {
                 title: "Book Selling",
                 cartBooks: cart,
@@ -77,7 +73,6 @@ class CartController {
     async addToCart(req, res, next) {
             if (!req.user) { //not login
                 if (!req.session.cart) {
-                    console.log("Initialize cart");
                     req.session.cart = { listBook: [] };
                 }
 
@@ -95,7 +90,7 @@ class CartController {
                 }
                 var booksInCart = req.session.cart.listBook;
                 Cart.addNewBookToCart(booksInCart, addedBook);
-                console.log(req.session.cart.listBook);
+
                 req.session.save();
 
                 res.render('cart/shopping-cart', { cartBooks: booksInCart });
@@ -104,14 +99,12 @@ class CartController {
                 try {
                     const carts = await CartService.findCurrentCartByUser(req.user.MAKH);
 
-                    // console.log(carts[0]);
                     const addbookID = req.body.bookid;
                     const addbookIMG = req.body.bookIMG;
                     const addbookName = req.body.bookName;
                     const addbookPrice = req.body.bookPrice;
                     const addbookQty = req.body.bookQty;
                     var cart = carts[0];
-                    console.log(cart);
                     //check if customer has current id for cart
                     if (cart.length > 0) {
                         const currentID = cart[0].iddathang;
@@ -137,7 +130,6 @@ class CartController {
                     } else { //if not generate new ID
                         //generate new ID
                         const cartID = CartService.generateIDDatHang(req.user.MAKH);
-                        console.log(cartID);
                         await CartService.addNewBookToCart(cartID, addbookID, req.user.MAKH);
                         const newBook = {
                             masach: addbookID,
@@ -148,8 +140,7 @@ class CartController {
                         };
                         Cart.addNewBookToCart(cart, newBook);
 
-                    }
-                    console.log(cart);
+                    }     
                     res.render('cart/shopping-cart', { cartBooks: cart });
 
                 } catch (err) {
@@ -171,7 +162,6 @@ class CartController {
 
 
                 const cart = carts[0];
-                console.log(cart);
                 if (cart.length > 0) {
 
                     const currentID = cart[0].iddathang;
@@ -194,7 +184,7 @@ class CartController {
                         for (let i = 0; i < cart.length; i++) {
                             const bookID = cart[i].masach;
                             const qty = cart[i].SOLUONG;
-                            console.log(bookID);
+
                             await BookService.updateQtyBook(bookID, qty);
                             await ct_phieumuaService.addctPhieumua(currentID, bookID, qty);
                         }
@@ -206,7 +196,6 @@ class CartController {
                     }
 
 
-                    console.log(currentID);
 
                     res.render("cart/payCart", { paymentResult: result, caution: msg });
                 }
@@ -268,7 +257,6 @@ class CartController {
                 }
 
             }
-            console.log(cart[0]);
             res.render('cart/historyCart', { alls: cart });
         } else {
             res.redirect(404);

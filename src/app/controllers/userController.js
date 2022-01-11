@@ -30,6 +30,7 @@ class UserController{
         if(req.user) {
             if(req.user.USER == req.params.username){
                 const account = await userservice.update(req);
+                res.user = account
                 res.redirect('back')
             }else{
                 res.redirect('/')
@@ -45,7 +46,7 @@ class UserController{
             if(req.user){
                 if(req.user.USER == req.params.username){
                     var check = !(await userservice.changePass(req))
-                    res.redirect(`/users/${req.user.USER}/changepass?passErr=${check}`)
+                    res.redirect('/logout')
                 }else{
                     res.send('respond with a resource'); 
                 }

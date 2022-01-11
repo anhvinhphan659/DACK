@@ -56,7 +56,6 @@ class BookController {
         const books = await bookService.findByType(type,sort);
 
         var page = parseInt(req.query.page);
-        // console.log(page);
         if (isNaN(page)) {
             page = 1;
         }
@@ -64,7 +63,6 @@ class BookController {
         const end = start + TITLE_PER_PAGE;
         const booksArray = books;
 
-        // console.log(booksArray);
 
         res.render('books/books-type', {
             title: "Book Selling",
@@ -82,7 +80,6 @@ class BookController {
         req.session.returnTo = req.originalUrl;
         var bookCategory = req.params.id;
         var sort = req.query.sort|| '';
-        console.log(sort)
 
         const books = await bookService.findByCategory(bookCategory,sort);
  
@@ -93,8 +90,6 @@ class BookController {
         const start = (page - 1) * TITLE_PER_PAGE;
         const end = start + TITLE_PER_PAGE;
         const booksArray = books;
-        // console.log(booksArray);
-        //res.send(books)
         res.render('books/books-category', {
             title: "Book Selling",
             books: booksArray.slice(start, end),

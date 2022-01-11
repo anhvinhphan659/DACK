@@ -17,14 +17,6 @@ const routes = require('./routes');
 const app = express();
 
 
-//setting handlebars
-
-// const hbs = exphbs.create({
-//     extname: '.hbs',
-
-// });
-
-
 // view engine setup
 app.engine(
     '.hbs',
@@ -49,6 +41,7 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
 }))
+
 app.use(passport.initialize());
 app.use(passport.session());
 
