@@ -28,7 +28,7 @@
         <div style="width: 150px;margin-bottom:5px">
           <div class="input-group">
             <span class="input-group-btn">
-              <button type="button" class="btn btn-warning" data-type="minus" data-field="" onclick="updateQuantity('-')">
+              <button type="button" class="btn btn-warning" data-type="minus" data-field="" onclick="updateQuantity('-')" >
                 <span>-</span>
               </button>
             </span>
@@ -49,13 +49,13 @@
           <input type="hidden" name="bookPrice" value="{{book.gia}}">
           <input type="hidden" name="bookQty" value="1" id="qtybook">
           <button type="button" name="add-to-cart" class="btn btn-primary"  id="add-to-cart">Thêm vào giỏ hàng</button>
-          <button type="button" class="btn btn-warning">Đặt ngay</button>
+          
           
         </div>
         </form>
         <div style="display:flex">
           <p>Gọi đặt hàng: </p>
-          <p style="color:#F46247;margin-left:5px">(0xx) xxxx xxxx</p>
+          <p style="color:#F46247;margin-left:5px">(+84) 2022 2022</p>
         </div>
         <div>
           <h4>
@@ -272,7 +272,8 @@ function updateQuantity(operator)
   }
   if(operator=="-")
   {
-    qty.value=parseInt(qty.value)-1;
+    if(parseInt(qty.value)>0)
+      qty.value=parseInt(qty.value)-1;
   }
   document.getElementById("qtybook").value=qty.value;
 }

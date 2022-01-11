@@ -3733,10 +3733,12 @@ ol {
 .footer-header {
     font-size: 16px;
     font-weight: 800;
+    color: white;
 }
 
 .footer-info {
     font-size: 14px;
+    color: white;
 }
 
 .icon-footer {
