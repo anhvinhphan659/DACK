@@ -31,7 +31,7 @@ class SiteController {
     async search(req, res, next) {
         req.session.returnTo = req.originalUrl;
         const title = req.query.title;
-        var sort = req.query.sort|| '';
+        var sort = req.query.sort || '';
         console.log(req.query.title);
         var page = parseInt(req.query.page);
         if (isNaN(page)) {
@@ -40,7 +40,7 @@ class SiteController {
 
         const start = (page - 1) * TITLE_PER_PAGE;
         const end = start + TITLE_PER_PAGE;
-        const books = await siteservice.findByTitle(title,sort);
+        const books = await siteservice.findByTitle(title, sort);
 
 
         const booksArray = books;
@@ -61,6 +61,8 @@ class SiteController {
         // res.send(books)
         return;
     }
+
+
 
 }
 module.exports = new SiteController

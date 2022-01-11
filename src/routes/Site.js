@@ -28,4 +28,5 @@ router.get('/reset-password', AuthController.resetPass)
 router.post('/reset-password', AuthController.resetPassPost)
 
 
+
 module.exports = router
