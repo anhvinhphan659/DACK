@@ -87,22 +87,12 @@ class authController {
     async register(req, res, next){
         try {
              // check if null
-        if(req.body.HOTEN ==="" || req.body.USER ==="" || req.body.EMAIL ==="" || req.body.PHAI==="" 
-        || req.body.HINHANH==="" || req.body.NGAYSINH ===""
-            || req.body.SDT ==="" || req.body.PASS ==="" || req.body.REPASS ==="" || req.body.DIACHI ===""){
-                res.redirect('/signup?errorEmpty=true')
-                next();
-        }
         var check = await authservice.checkUSER(req.body.USER)
         var checkPASS = !(req.body.PASS === req.body.REPASS)
         // check exist user
         if(check){
             res.redirect('/signup?errorUSER=true')
             next();
-        }
-        if(checkPASS){
-            res.redirect('/signup?errorPASS=true')
-            next()
         }
         await authservice.create(req)
         req.body.username = req.body.USER
