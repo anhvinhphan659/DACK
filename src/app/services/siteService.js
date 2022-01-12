@@ -130,24 +130,20 @@ exports.findNewBooks = (type) => {
   });
 }
 
-exports.findHotBooks = (type) => {
-  return models.tonkho.findAll({
-    include:[{
-      model: models.sach,
-      as: 'masach_sach',
-      where: {
-        masach: {
-          [Op.like]: type+'%',
-        }
-      }
-    }],
-
-    order: [
-      ['Tongxuat', "DESC"],
-    ],
-
-    limit: 10
-  });
+exports.findHotBooks = async (type) => {
+    const books = await sequelize.query(
+    "SELECT * " + 
+    "FROM `sach` AS `sach` JOIN " +
+    "(SELECT `ctpm`.`MASACH` AS `masach`, SUM(SL) AS `SL` " + 
+    "FROM `ct_phieumua` AS `ctpm` " + 
+    "GROUP BY `ctpm`.`MASACH`) AS `pm` " + 
+    "ON `pm`.`masach` =  `sach`.`masach` " +
+    "WHERE `sach`.`masach` LIKE '" + type + "%' " +
+    "ORDER BY `pm`.`SL` DESC " +
+    "LIMIT 10 "
+  )
+  console.log(books[0])
+  return books[0] 
 }
 
 //Lấy thể loại sách

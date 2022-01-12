@@ -21,8 +21,8 @@ class SiteController {
                 title: 'NoName',
                 newComics: multipleSequelizeToObject(newComics),
                 newNovels: multipleSequelizeToObject(newNovels),
-                hotComics: multipleSequelizeToObject(hotComics),
-                hotNovels: multipleSequelizeToObject(hotNovels)
+                hotComics,
+                hotNovels
             });
         }
         // [GET]: /search 
