@@ -16,12 +16,13 @@ exports.findCurrentCartByUser = async(id_user) => {
     )
 }
 
-exports.addNewBookToCart = async(currentID, bookID, customerID) => {
+exports.addNewBookToCart = async(currentID, bookID, customerID, qty) => {
     await models.dathang.findOne({
         where: {
             iddathang: currentID,
             masach: bookID,
             makh: customerID,
+            SOLUONG: qty,
         }
     }).then(function(obj) {
         if (!obj) {
@@ -30,7 +31,7 @@ exports.addNewBookToCart = async(currentID, bookID, customerID) => {
                 masach: bookID,
                 makh: customerID,
                 TRANGTHAI: 'DANGDAT',
-                SOLUONG: 1,
+                SOLUONG: qty,
                 THOIGIAN: new Date(),
             });
         }

@@ -51,7 +51,7 @@ class CartController {
 
             }
             for (let i = 0; i < staticCart.length; i++) {
-                CartService.addNewBookToCart(iddh, staticCart[i].masach, req.user.MAKH);
+                CartService.addNewBookToCart(iddh, staticCart[i].masach, req.user.MAKH, staticCart[i].SOLUONG);
                 Cart.addNewBookToCart(cart, staticCart[i]);
             }
 
@@ -115,7 +115,7 @@ class CartController {
                             //skip this
                         } else { //not existed
                             //create new in
-                            await CartService.addNewBookToCart(currentID, addbookID, req.user.MAKH);
+                            await CartService.addNewBookToCart(currentID, addbookID, req.user.MAKH, addbookQty);
                             const newBook = {
                                 masach: addbookID,
                                 SOLUONG: addbookQty,
@@ -130,7 +130,7 @@ class CartController {
                     } else { //if not generate new ID
                         //generate new ID
                         const cartID = CartService.generateIDDatHang(req.user.MAKH);
-                        await CartService.addNewBookToCart(cartID, addbookID, req.user.MAKH);
+                        await CartService.addNewBookToCart(cartID, addbookID, req.user.MAKH, addbookQty);
                         const newBook = {
                             masach: addbookID,
                             SOLUONG: addbookQty,
@@ -140,7 +140,7 @@ class CartController {
                         };
                         Cart.addNewBookToCart(cart, newBook);
 
-                    }     
+                    }
                     res.render('cart/shopping-cart', { cartBooks: cart });
 
                 } catch (err) {
@@ -159,8 +159,6 @@ class CartController {
             // res.send(Cart.getCart());
             try {
                 const carts = await CartService.findCurrentCartByUser(req.user.MAKH);
-
-
                 const cart = carts[0];
                 if (cart.length > 0) {
 
