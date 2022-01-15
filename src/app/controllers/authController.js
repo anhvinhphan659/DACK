@@ -53,9 +53,6 @@ class authController {
         try {
             var email = await authservice.getMail(req)
             const token = await authservice.sendEmail(email)
-            
-            
-
             var messages
             if (token) {
                 let hide = email.EMAIL.split("@")[0].length - 2;//<-- number of characters to hide

@@ -177,7 +177,6 @@ class CartController {
                     var result = ""
                         //if success update state of cart
                     if (isSuccess) {
-                        CartService.payCart(currentID);
                         result = "Thanh toán thành công"
                             //update in databse
                         await phieumuaService.addPhieuMua(currentID, req.user.MAKH);
@@ -185,7 +184,6 @@ class CartController {
                             const bookID = cart[i].masach;
                             const qty = cart[i].SOLUONG;
 
-                            await BookService.updateQtyBook(bookID, qty);
                             await ct_phieumuaService.addctPhieumua(currentID, bookID, qty);
                         }
                         await CartService.payCart(currentID);

@@ -216,3 +216,4 @@ exports.getcomment = async(req) => {
         "  FROM `binhluan` AS `binhluan` LEFT OUTER JOIN `khachhang` AS `USER_khachhang` ON `binhluan`.`USER` = `USER_khachhang`.`USER` AND (`USER_khachhang`.`deletedAt` IS NULL) WHERE `binhluan`.`MASACH` =  '" + req.params.id + "'" +
         " ORDER BY `binhluan`.`THOIGIAN` DESC")
 };
+
